@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import imageLogo from "../../assets/image-logo.png"
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {dispatch} from "../../store";
 import {addNewTask, clearTask, setIdxTimerRefresh, updateAllTask} from "../../store/slice/profile-slice";
 import {useSelector} from "react-redux";
@@ -75,14 +75,28 @@ const UiTimer = () => {
     const [taskLength, setTaskLength] = useState(0)
     const [userTask, setUserTask] = useState(profile.task)
     const [procId, setProcId] = useState(null)
+    const previousInputValue = useRef(userTask);
+
+    useEffect(() => {
+        previousInputValue.current = userTask;
+    }, [userTask]);
+
+    useEffect(() => {
+        startTimer(timerObjList[idxTimer])
+    }, []);
 
     const onTimerMenuClicked = (event) => {
         setAnchorTimerMenu(event.currentTarget)
     }
-    const onTimerMenuSelected = (item) => {
+
+    const startTimer = (item) => {
         setIdxTimer(item["id"])
         dispatch(setIdxTimerRefresh(item["id"]))
         setProcessWithInterval(item["value"] * 1000)
+    }
+
+    const onTimerMenuSelected = (item) => {
+        startTimer(item)
         setAnchorTimerMenu(null)
     }
     const onTimerMenuClosed = () => {
@@ -128,8 +142,8 @@ const UiTimer = () => {
     }
     const checkTasksByTimer = () => {
         let need_to_update = false
-        let tmp_task = JSON.parse(JSON.stringify(userTask))
-        console.log(JSON.stringify(tmp_task))
+        let tmp_task = JSON.parse(JSON.stringify(previousInputValue.current))
+        // console.log(JSON.stringify(tmp_task))
         for (let i = 0; i < tmp_task.length; i++) {
             let task = tmp_task[i]
             if (task["proc"] === task["lenTask"])
@@ -141,7 +155,7 @@ const UiTimer = () => {
         }
 
         if(need_to_update) {
-            console.log(JSON.stringify(tmp_task))
+            // console.log(JSON.stringify(tmp_task))
             setUserTask(tmp_task)
             dispatch(updateAllTask(tmp_task))
         }
