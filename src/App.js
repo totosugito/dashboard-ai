@@ -1,6 +1,6 @@
 import {createTheme, ThemeProvider} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
-import {UiTimer} from "./page";
+import {UiTimer, UiTimerApi} from "./page";
 
 function App() {
   const theme = createTheme({})
@@ -8,7 +8,8 @@ function App() {
   return (
       <ThemeProvider theme={theme}>
         <Routes>
-            <Route path={""} element={<UiTimer/>}/>
+            <Route path={""} element={<UiTimerApi/>}/>
+            <Route path={"ui-timer"} element={<UiTimer/>}/>
         </Routes>
       </ThemeProvider>
   );
