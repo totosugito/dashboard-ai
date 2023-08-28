@@ -83,6 +83,7 @@ const UiTimer = () => {
 
     useEffect(() => {
         startTimer(timerObjList[idxTimer])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onTimerMenuClicked = (event) => {

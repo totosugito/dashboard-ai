@@ -1,7 +1,7 @@
 import {
     AppBar,
     Box,
-    Button, Card, CardContent, CardHeader,
+    Button, Card, CardContent,
     Container,
     Grid, IconButton,
     Link,
@@ -26,7 +26,6 @@ import {useSelector} from "react-redux";
 import MuiDialog from "../../component/MuiDialog";
 import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
-import PlusOneOutlinedIcon from '@mui/icons-material/PlusOneOutlined';
 import {httpGet, httpPost} from "../../service/http-api";
 
 const UiTimerApi = () => {
@@ -89,6 +88,7 @@ const UiTimerApi = () => {
 
     useEffect(() => {
         startTimer(timerObjList[idxTimer])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onTimerMenuClicked = (event) => {

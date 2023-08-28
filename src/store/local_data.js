@@ -13,3 +13,11 @@ export function getUserData() {
 export function setUserData(data) {
     localStorage.setItem(PREF_USER, JSON.stringify(data));
 }
+
+export const PREF_PROJECT = "project"
+export function getProjectData() {
+    return (JSON.parse(localStorage.getItem(PREF_PROJECT)));
+}
+export function setProjectData(data) {
+    localStorage.setItem(PREF_PROJECT, JSON.stringify(data));
+}
