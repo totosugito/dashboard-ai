@@ -16,6 +16,7 @@ const BoxSummary = () => {
 
     const dummy = useSelector((state) => state.dummy)
     const [project, setProject] = useState(dummy["project"])
+    const [taskApi, setTaskApi] = useState(dummy["taskApi"])
     return(
         <>
             <Container maxWidth="xl" sx={styles.container}>
@@ -27,7 +28,7 @@ const BoxSummary = () => {
                         <AppWidgetSummary title="Total Projects" total={project.length} color="success" icon={<WorkIcon/>}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppWidgetSummary title="Item Tasks" total={17} color="warning" icon={<AssignmentIcon/>}/>
+                        <AppWidgetSummary title="Item Tasks" total={Object.keys(taskApi).length} color="warning" icon={<AssignmentIcon/>}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <AppWidgetSummary title="Total Data" total={234} color="error" icon={<StorageIcon/>}/>

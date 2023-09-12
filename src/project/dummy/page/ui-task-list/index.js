@@ -28,18 +28,17 @@ const UiTaskList = () => {
     const theme = useTheme()
     const styles = {
         boxContainer: {},
-        imageLogo: {
-            height: "42px"
+        logo: {
+            width: "35px"
         },
-        titleLogo: {
-            pl: 1,
-            fontSize: "130%",
-            color: theme.palette.primary.contrastText,
-            display: 'inline'
+        title: {
+            ml: 1,
+            color: 'white',
+            fontSize: '25px'
         },
         toolbarButton: {
-            width: "28px",
-            height: "28px",
+            width: "24px",
+            height: "24px",
         }
     }
 
@@ -212,24 +211,20 @@ const UiTaskList = () => {
                         <Container maxWidth={'xl'}>
                             <Grid container direction="row" alignItems="flex-end" justifyContent="space-between">
                                 <Grid item>
-                                    <Link href={"/"} underline={'none'} justifyContent={'center'} display={'flex'}>
+                                    <Link href={"/"} underline={'none'} display={'flex'}>
                                         <Box
                                             component="img"
-                                            sx={styles.imageLogo}
+                                            sx={styles.logo}
                                             src={imageLogo}
                                         />
-                                        <Typography sx={styles.titleLogo}>Dashboard AI</Typography>
+                                        <Typography sx={styles.title}>Dashboard AI</Typography>
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    {/*<IconButton color={'inherit'} size={'large'}*/}
-                                    {/*            onClick={() => checkTasksByTimer()}><PlusOneOutlinedIcon*/}
-                                    {/*    sx={styles.toolbarButton}/></IconButton>*/}
-
-                                    <IconButton color={'inherit'} size={'large'}
+                                    <IconButton color={'inherit'}
                                                 onClick={() => showNewTaskDialog()}><BookmarkAddOutlinedIcon
                                         sx={styles.toolbarButton}/></IconButton>
-                                    <IconButton color={'inherit'} size={'large'}
+                                    <IconButton color={'inherit'}
                                                 onClick={() => setOpenClearTaskDialog(true)}><DeleteSweepOutlinedIcon
                                         sx={styles.toolbarButton}/></IconButton>
                                     <Button variant={'text'} color={'inherit'} sx={{textTransform: ' none', ml: 2}}
