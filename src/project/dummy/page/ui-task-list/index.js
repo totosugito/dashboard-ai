@@ -12,23 +12,19 @@ import {
     Typography,
     useTheme
 } from "@mui/material";
-import imageLogo from "../../assets/image-logo.png"
+import imageLogo from "../../../../assets/image-logo.png"
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import {useEffect, useRef, useState} from "react";
-import {dispatch} from "../../store";
-import {
-    addNewTaskApi,
-    clearTask,
-    setIdxTimerRefresh,
-    updateAllTaskApi
-} from "../../store/slice/profile-slice";
+import {dispatch} from "../../../../store";
 import {useSelector} from "react-redux";
-import MuiDialog from "../../component/MuiDialog";
+import MuiDialog from "../../../../component/MuiDialog";
 import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
-import {httpGet, httpPost} from "../../service/http-api";
+import {httpGet, httpPost} from "../../../../service/http-api";
+import {getRouterApi} from "../../../../router";
+import {addNewTaskApi, clearTask, setIdxTimerRefresh, updateAllTaskApi} from "../../../../store/slice/dummy";
 
-const UiTimerApi = () => {
+const UiTaskList = () => {
     const theme = useTheme()
     const styles = {
         boxContainer: {},
@@ -71,14 +67,15 @@ const UiTimerApi = () => {
         },
     ]
 
-    const profile = useSelector((state) => state.profile)
-    const [idxTimer, setIdxTimer] = useState(profile.idxTimerRefresh)
+    const dummy = useSelector((state) => state.dummy)
+    const [idxTimer, setIdxTimer] = useState(dummy["idxTimerRefresh"])
     const [anchorTimerMenu, setAnchorTimerMenu] = useState(null)
     const hasTimerMenuOpen = Boolean(anchorTimerMenu)
     const [openInputDialog, setOpenInputDialog] = useState(false)
     const [openClearTaskDialog, setOpenClearTaskDialog] = useState(false)
     const [taskName, setTaskName] = useState("")
-    const [userTask, setUserTask] = useState(profile.taskApi)
+    const [taskNum, setTaskNum] = useState(0)
+    const [userTask, setUserTask] = useState(dummy["taskApi"])
     const [procId, setProcId] = useState(null)
     const previousInputValue = useRef(userTask);
 
@@ -116,6 +113,12 @@ const UiTimerApi = () => {
         }
     }
 
+    const showNewTaskDialog = () => {
+        setTaskName("")
+        setTaskNum(0)
+        setOpenInputDialog(true)
+    }
+
     const dialogClearOnCancelClicked = () => {
         setOpenClearTaskDialog(false)
     }
@@ -139,8 +142,10 @@ const UiTimerApi = () => {
     const createNewTask = () => {
         let param = {
             name: taskName,
+            num: taskNum
         }
-        httpPost("/api/task/start", param).then((v) => {
+
+        httpPost(getRouterApi("dummy-task-create"), param).then((v) => {
             if (v.isError) {
                 console.log(v.message)
             } else {
@@ -162,11 +167,11 @@ const UiTimerApi = () => {
         Object.keys(all_task).map((key_) => {
             let task = tmp_task[key_]
             if (task["status"] !== "SUCCESS") {
-                httpGet("/api/task/status/" + task["task_id"]).then((v) => {
+                httpGet(getRouterApi("dummy-task-status", {id: task["task_id"]})).then((v) => {
                     if (v.isError) {
                         console.log("ERROR: " + v.message)
                     } else {
-                        console.log(JSON.stringify(v.data))
+                        // console.log(JSON.stringify(v.data))
                         let task_id = v.data["task_id"]
                         let tmp_ = v.data
                         if (!("result" in v.data))
@@ -191,12 +196,20 @@ const UiTimerApi = () => {
         })
     }
 
+    const handleChange = (e) => {
+        const inputValue = e.target.value
+        const numericValue = Number(inputValue);
+        if (!Number.isNaN(numericValue) || inputValue === '') {
+            setTaskNum(numericValue)
+        }
+    };
+
     return (
         <>
             <Box sx={styles.boxContainer}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Container maxWidth={'md'}>
+                        <Container maxWidth={'xl'}>
                             <Grid container direction="row" alignItems="flex-end" justifyContent="space-between">
                                 <Grid item>
                                     <Link href={"/"} underline={'none'} justifyContent={'center'} display={'flex'}>
@@ -214,7 +227,7 @@ const UiTimerApi = () => {
                                     {/*    sx={styles.toolbarButton}/></IconButton>*/}
 
                                     <IconButton color={'inherit'} size={'large'}
-                                                onClick={() => setOpenInputDialog(true)}><BookmarkAddOutlinedIcon
+                                                onClick={() => showNewTaskDialog()}><BookmarkAddOutlinedIcon
                                         sx={styles.toolbarButton}/></IconButton>
                                     <IconButton color={'inherit'} size={'large'}
                                                 onClick={() => setOpenClearTaskDialog(true)}><DeleteSweepOutlinedIcon
@@ -238,7 +251,7 @@ const UiTimerApi = () => {
                         </Container>
                     </Toolbar>
                 </AppBar>
-                <Container maxWidth={'md'}>
+                <Container maxWidth={'xl'}>
                     <Grid container spacing={2} sx={{mt: 1}}>
                         {
                             Object.keys(userTask).map((key_) => {
@@ -290,7 +303,7 @@ const UiTimerApi = () => {
                 title={<Box textAlign={'center'}><Typography variant={'h4'}>Create Task</Typography></Box>}
                 contents={
                     <>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2} direction={'column'}>
                             <Grid item sx={{maxWidth: '300px'}}>
                                 <TextField
                                     required
@@ -299,6 +312,17 @@ const UiTimerApi = () => {
                                     size="small"
                                     value={taskName}
                                     onChange={(e) => setTaskName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item sx={{maxWidth: '300px'}}>
+                                <TextField
+                                    required
+                                    type={'number'}
+                                    label={"Task Num"}
+                                    variant="filled"
+                                    size="small"
+                                    value={taskNum}
+                                    onChange={(e) => handleChange(e)}
                                 />
                             </Grid>
                         </Grid>
@@ -312,4 +336,4 @@ const UiTimerApi = () => {
         </>
     )
 }
-export default UiTimerApi
+export default UiTaskList

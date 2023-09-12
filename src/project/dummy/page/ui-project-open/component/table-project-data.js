@@ -36,14 +36,14 @@ const TableProjectData = (props) => {
                     enableFullScreenToggle={false}
                     enableDensityToggle={false}
                     enableColumnFilters={false}
-                    enableBottomToolbar={props.data.length > 25}
+                    enableBottomToolbar={props.data.length > 15}
                     muiTableProps={{
                         sx: {
                             tableLayout: 'fixed',
                         },
                     }}
                     initialState={{
-                        pagination: {pageSize: 25, pageIndex: 0},
+                        pagination: {pageSize: 15, pageIndex: 0},
                         density: 'compact',
                     }}
                 />

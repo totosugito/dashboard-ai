@@ -1,10 +1,11 @@
 import BaseUi from "../base-ui";
 import {Box, Button, Container, TextField, Typography, useTheme} from "@mui/material";
 import {useState} from "react";
-import {dispatch} from "../../store";
-import {addProject} from "../../store/slice/profile-slice";
+import {dispatch} from "../../../../store";
 import {useNavigate} from "react-router-dom";
 import {read, utils} from "xlsx";
+import {dummyAddProject} from "../../../../store/slice/dummy";
+import {getRouterUrl} from "../../../../router";
 
 const UiProjectCreate = (props) => {
     const navigate = useNavigate()
@@ -12,6 +13,12 @@ const UiProjectCreate = (props) => {
     const styles = {
         container: {
             mt: 2
+        },
+        title: {
+            mt: 2,
+            mb: 1,
+            fontSize: '25px',
+            color: theme.palette.secondary.main
         }
     }
 
@@ -40,8 +47,8 @@ const UiProjectCreate = (props) => {
         project.total = project.data.length
         project.status = ''
 
-        dispatch(addProject(project))
-        navigate('/ui-dashboard')
+        dispatch(dummyAddProject(project))
+        navigate(getRouterUrl("dummy-dashboard"))
     }
 
     const handleImport = ($event) => {
@@ -67,7 +74,7 @@ const UiProjectCreate = (props) => {
         <>
             <BaseUi>
                 <Container maxWidth="xl" sx={styles.container}>
-                    <Typography variant={'h5'} sx={{mb: 2}}>Create Project</Typography>
+                    <Typography sx={styles.title}>Create Project</Typography>
 
                     <form onSubmit={handleSubmit}>
                         <TextField
@@ -92,7 +99,6 @@ const UiProjectCreate = (props) => {
                         />
 
                         <Box sx={{p: 1}}>
-                            {/*<Button className="custom-file-label" htmlFor="inputGroupFile">Choose file</Button>*/}
                             <input type="file" name="file" className="custom-file-input" id="inputGroupFile"
                                    required onChange={handleImport}
                                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
@@ -100,7 +106,8 @@ const UiProjectCreate = (props) => {
 
                         {
                             (project.data.length > 0) && (
-                                <Box sx={{p: 1}}><Typography>Read data with size : {project.data.length} rows</Typography></Box>
+                                <Box sx={{p: 1}}><Typography>Read data with size
+                                    : {project.data.length} rows</Typography></Box>
                             )
                         }
                         <Button

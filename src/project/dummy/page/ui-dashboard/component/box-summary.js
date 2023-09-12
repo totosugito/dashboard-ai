@@ -1,5 +1,5 @@
 import {Container, Grid} from "@mui/material";
-import AppWidgetSummary from "../../../component/AppWidgetSummary";
+import AppWidgetSummary from "../../../../../component/AppWidgetSummary";
 import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -14,8 +14,8 @@ const BoxSummary = () => {
         }
     }
 
-    const profile = useSelector((state) => state.profile)
-    const [project, setProject] = useState(profile.project)
+    const dummy = useSelector((state) => state.dummy)
+    const [project, setProject] = useState(dummy["project"])
     return(
         <>
             <Container maxWidth="xl" sx={styles.container}>

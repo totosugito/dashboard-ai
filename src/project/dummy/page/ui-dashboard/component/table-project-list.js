@@ -1,24 +1,18 @@
-import {Box, Button, Card, CardHeader, Container, Grid, IconButton, Typography} from "@mui/material";
+import {Box, Grid, IconButton, Typography} from "@mui/material";
 import MaterialReactTable from "material-react-table";
-import PostAddIcon from '@mui/icons-material/PostAdd';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
 import {useState} from "react";
-import {dispatch} from "../../../store";
-import {deleteProject} from "../../../store/slice/profile-slice";
-import MuiDialog from "../../../component/MuiDialog";
+import {dispatch} from "../../../../../store";
+import MuiDialog from "../../../../../component/MuiDialog";
 import {useRef} from "react";
 import {useNavigate} from "react-router-dom";
+import {getRouterUrl} from "../../../../../router";
+import {dummyDeleteProject} from "../../../../../store/slice/dummy";
 
 const TableProjectList = (props) => {
     const styles = {
-        container: {
-            mt: 2,
-        },
-        card: {
-            p: 1,
-            boxShadow: 0,
-        }
+
     }
 
     const create_table_column = () => {
@@ -86,7 +80,7 @@ const TableProjectList = (props) => {
     const navigate = useNavigate()
 
     const openProjectPage = (row) => {
-        navigate('/ui-project-open/' + row['id'])
+        navigate(getRouterUrl("dummy-project-open", "/", {id: row['id']}))
     }
 
     const showDialogDelete = (row) => {
@@ -97,17 +91,12 @@ const TableProjectList = (props) => {
         setOpenDeleteDialog(false)
     }
     const dialogClearOnConfirmClicked = () => {
-        dispatch(deleteProject(selectedRow))
-        // setData(JSON.parse(JSON.stringify(dataPrev)))
-        // setData(dataPrev)
+        dispatch(dummyDeleteProject(selectedRow))
         setOpenDeleteDialog(false)
+        window.location.reload()
     }
     return (
         <>
-            <Container maxWidth="xl" sx={styles.container}>
-                <Card sx={styles.card}>
-                    <CardHeader title={'Project List'}/>
-                    <Button variant="outlined" startIcon={<PostAddIcon/>} sx={{textTransform: 'none'}} onClick={props.onClickCreateProject}>Create project</Button>
                     <MaterialReactTable
                         columns={create_table_column()}
                         data={data}
@@ -121,15 +110,11 @@ const TableProjectList = (props) => {
                         enableBottomToolbar={data.length > 10}
                         muiTableProps={{
                             sx: {
-                                // tableLayout: 'fixed',
                             },
                         }}
                         initialState={{
-                            // density: 'compact',
                         }}
                     />
-                </Card>
-            </Container>
 
             <MuiDialog
                 open={openDeleteDialog}
