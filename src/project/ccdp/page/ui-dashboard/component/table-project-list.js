@@ -80,7 +80,7 @@ const TableProjectList = (props) => {
     const navigate = useNavigate()
 
     const openProjectPage = (row) => {
-        navigate(getRouterUrl("dummy-project-open", "/", {id: row['id']}))
+        navigate(getRouterUrl("ccdp-project-open", "/", {id: row['id']}))
     }
 
     const showDialogDelete = (row) => {

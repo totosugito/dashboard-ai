@@ -2,6 +2,7 @@ import BaseUi from "../base-ui";
 import {Button, Grid, Paper, Typography, useTheme} from "@mui/material";
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import {useNavigate} from "react-router-dom";
 import {getRouterUrl} from "../../../../router";
 
@@ -23,7 +24,7 @@ const MainDashboard = () => {
         },
         paper: {
             p: 2,
-            width: '140px',
+            width: '150px',
             textTransform: 'none'
         },
         icon: {
@@ -34,7 +35,7 @@ const MainDashboard = () => {
     return (<BaseUi title={<Typography sx={styles.title}>Project List</Typography>}>
         <Grid sx={styles.grid}>
 
-            <Button onClick={()=>navigate(getRouterUrl("dummy-dashboard"))}>
+            <Button onClick={()=>navigate(getRouterUrl("dummy-task-list"))}>
                 <Paper sx={styles.paper}>
                     <AppRegistrationIcon style={styles.icon}/>
                     <Typography variant={'h4'}>Dummy</Typography>
@@ -44,6 +45,13 @@ const MainDashboard = () => {
                 <Paper sx={styles.paper}>
                     <CreditCardIcon style={styles.icon}/>
                     <Typography variant={'h4'}>CCDP</Typography>
+                </Paper>
+            </Button>
+
+            <Button onClick={()=>navigate(getRouterUrl("ccdp-v1-dashboard"))}>
+                <Paper sx={styles.paper}>
+                    <CreditScoreIcon style={styles.icon}/>
+                    <Typography variant={'h4'}>CCDP v1</Typography>
                 </Paper>
             </Button>
         </Grid>

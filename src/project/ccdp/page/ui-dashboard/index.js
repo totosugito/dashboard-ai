@@ -31,7 +31,7 @@ const UiDashboard = () => {
     const [project, setProject] = useState(dummy["project"])
     const navigate = useNavigate()
     const onClickCreateProject = () => {
-        navigate(getRouterUrl("dummy-project-create"))
+        navigate(getRouterUrl("ccdp-project-create"))
     }
     const onClickTaskList = () => {
         navigate(getRouterUrl("dummy-task-list"))
@@ -46,7 +46,6 @@ const UiDashboard = () => {
                     <Card sx={styles.card}>
                         <CardHeader title={'Project List'}/>
                         <Button variant="outlined" startIcon={<PostAddIcon/>} sx={{textTransform: 'none', mr: 2}} onClick={onClickCreateProject}>Create project</Button>
-                        <Button variant="outlined" startIcon={<AssignmentTurnedInIcon/>} sx={{textTransform: 'none'}} onClick={onClickTaskList}>Task List</Button>
                         <TableProjectList data={project}/>
                     </Card>
                 </Container>

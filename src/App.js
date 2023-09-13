@@ -1,7 +1,9 @@
 import {createTheme, ThemeProvider} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
 import {MainDashboard} from "./project/main";
-import {DummyDashboard, DummyProjectCreate, DummyProjectOpen, DummyTaskList} from "./project/dummy";
+import {DummyTaskList} from "./project/dummy";
+import {CcdpDashboard, CcdpProjectCreate, CcdpProjectOpen} from "./project/ccdp";
+import {CcdpV1Dashboard, CcdpV1ProjectEdit} from "./project/ccdpv1";
 import {getRouterUrl} from "./router";
 
 function App() {
@@ -13,10 +15,14 @@ function App() {
             <Route path={""} element={<MainDashboard/>}/>
             <Route path={getRouterUrl("main-dashboard")} element={<MainDashboard/>}/>
 
-            <Route path={getRouterUrl("dummy-dashboard")} element={<DummyDashboard/>}/>
-            <Route path={getRouterUrl("dummy-project-create")} element={<DummyProjectCreate/>}/>
-            <Route path={getRouterUrl("dummy-project-open")} element={<DummyProjectOpen/>}/>
             <Route path={getRouterUrl("dummy-task-list")} element={<DummyTaskList/>}/>
+
+            <Route path={getRouterUrl("ccdp-dashboard")} element={<CcdpDashboard/>}/>
+            <Route path={getRouterUrl("ccdp-project-create")} element={<CcdpProjectCreate/>}/>
+            <Route path={getRouterUrl("ccdp-project-open")} element={<CcdpProjectOpen/>}/>
+
+            <Route path={getRouterUrl("ccdp-v1-dashboard")} element={<CcdpV1Dashboard/>}/>
+            <Route path={getRouterUrl("ccdp-v1-project-edit")} element={<CcdpV1ProjectEdit/>}/>
         </Routes>
       </ThemeProvider>
   );

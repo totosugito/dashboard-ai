@@ -48,7 +48,7 @@ const UiProjectCreate = (props) => {
         project.status = ''
 
         dispatch(dummyAddProject(project))
-        navigate(getRouterUrl("dummy-dashboard"))
+        navigate(getRouterUrl("ccdp-dashboard"))
     }
 
     const handleImport = ($event) => {
