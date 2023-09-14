@@ -1,11 +1,14 @@
-import {Container, Grid} from "@mui/material";
+import {Box, Container, Grid, Typography} from "@mui/material";
 import AppWidgetSummary from "../../../../../component/AppWidgetSummary";
 import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import StorageIcon from "@mui/icons-material/Storage";
 import {useSelector} from "react-redux";
 import {useState} from "react";
+import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
+import MuiDialog from "../../../../../component/MuiDialog";
+import {dispatch} from "../../../../../store";
+import {clearAllData} from "../../../../../store/slice/ccdpv1";
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
 
 const BoxSummary = () => {
     const styles = {
@@ -14,8 +17,19 @@ const BoxSummary = () => {
         }
     }
 
-    const dataStore = useSelector((state) => state.ccdp)
+    const dataStore = useSelector((state) => state.ccdpv1)
     const [project, setProject] = useState(dataStore["project"])
+    const [model, setModel] = useState(dataStore["model"])
+    const [openClearDialog, setOpenClearDialog] = useState(false)
+    const dialogClearOnCancelClicked = () => {
+        setOpenClearDialog(false)
+    }
+    const dialogClearOnConfirmClicked = () => {
+        dispatch(clearAllData())
+        setOpenClearDialog(false)
+        window.location.reload()
+    }
+
     const getTaskCount = () => {
         if ("task" in project) {
             return (Object.keys(project["task"]).length)
@@ -33,13 +47,31 @@ const BoxSummary = () => {
                         <AppWidgetSummary title="Total Projects" total={project.length} color="success" icon={<WorkIcon/>}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppWidgetSummary title="Item Tasks" total={getTaskCount()} color="warning" icon={<AssignmentIcon/>}/>
+                        <AppWidgetSummary title="Item Models" total={model.length} color="warning" icon={<ViewInArIcon/>}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppWidgetSummary title="Total Data" total={234} color="error" icon={<StorageIcon/>}/>
+                        <AppWidgetSummary title="Clear Data" total={"-"} color="error" icon={<FolderDeleteIcon/>} onClick={()=> setOpenClearDialog(true)}/>
                     </Grid>
                 </Grid>
             </Container>
+
+            <MuiDialog
+                open={openClearDialog}
+                title={<Box textAlign={'center'}><Typography variant={'h4'}>Clear Data</Typography></Box>}
+                contents={
+                    <>
+                        <Grid container spacing={2}>
+                            <Grid item sx={{maxWidth: '300px'}}>
+                                <Typography>Are you want to clear all data ?</Typography>
+                            </Grid>
+                        </Grid>
+                    </>
+                }
+                cancelText={"No"}
+                confirmText={"Yes"}
+                onCancelClicked={dialogClearOnCancelClicked}
+                onConfirmClicked={dialogClearOnConfirmClicked}
+            />
         </>
     )
 }

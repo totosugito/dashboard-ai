@@ -1,5 +1,5 @@
 import dummy from './dummy';
-import ccdp from './ccdp';
+import ccdpv1 from './ccdpv1';
 
-const reducers = ({dummy: dummy, ccdp: ccdp});
+const reducers = ({dummy: dummy, ccdpv1: ccdpv1});
 export default reducers;

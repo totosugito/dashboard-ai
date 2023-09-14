@@ -8,10 +8,16 @@ export function getRouterUrl(key, prefix="/", param={}) {
         "dummy-task-list": prefix + "dummy/task-list",
         "ccdp-dashboard": prefix + "ccdp/dashboard",
         "ccdp-project-create": prefix + "ccdp/project-create",
-        "ccdp-project-open": prefix + "ccdp/project-open/" + (("id" in param) ? `/${param["id"]}` : "/:id"),
+        "ccdp-project-open": prefix + "ccdp/project-open/" + (("id" in param) ? `${param["id"]}` : ":id"),
 
         "ccdp-v1-dashboard": prefix + "ccdp-v1/dashboard",
         "ccdp-v1-project-edit": prefix + "ccdp-v1/project-edit",
+        "ccdp-v1-project-list": prefix + "ccdp-v1/project-list",
+        "ccdp-v1-project-open": prefix + "ccdp-v1/project-open/" + (("id" in param) ? `${param["id"]}` : ":id"),
+
+        "ccdp-v1-model-edit": prefix + "ccdp-v1/model-edit",
+        "ccdp-v1-model-list": prefix + "ccdp-v1/model-list",
+        "ccdp-v1-model-open": prefix + "ccdp-v1/model-open/" + (("id" in param) ? `${param["id"]}` : ":id"),
     }
     return(routers[key])
 }

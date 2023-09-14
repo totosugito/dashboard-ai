@@ -13,7 +13,7 @@ const StyledIcon = styled('div')(({theme}) => ({
     marginBottom: theme.spacing(3),
 }));
 
-export default function AppWidgetSummary({title, total, icon, color = 'primary', sx, ...other}) {
+export default function AppWidgetSummary({title, total, icon, color = 'primary', sx, onClick, ...other}) {
     return (
         <Card
             sx={{
@@ -30,7 +30,7 @@ export default function AppWidgetSummary({title, total, icon, color = 'primary',
             }}
             {...other}
         >
-            <StyledIcon
+            <StyledIcon onClick={onClick}
                 sx={{
                     color: (theme) => theme.palette[color].dark,
                     backgroundImage: (theme) =>

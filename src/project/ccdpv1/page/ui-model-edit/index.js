@@ -6,10 +6,9 @@ import TextEditor from "../../../../component/TipTap/TextEditor";
 import {dispatch} from "../../../../store";
 import {getRouterUrl} from "../../../../router";
 import {useState} from "react";
-import {projectAdd} from "../../../../store/slice/ccdpv1";
-import {read, utils} from "xlsx";
+import {modelAdd, projectAdd} from "../../../../store/slice/ccdpv1";
 
-const UiProjectEdit = (props) => {
+const UiModelEdit = (props) => {
     const navigate = useNavigate()
     const theme = useTheme()
     const styles = {
@@ -45,24 +44,6 @@ const UiProjectEdit = (props) => {
     })
     const {title, desc} = project
 
-    const handleImport = ($event) => {
-        const files = $event.target.files;
-        if (files.length) {
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const wb = read(event.target.result);
-                const sheets = wb.SheetNames;
-
-                if (sheets.length) {
-                    const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                    setProject({...project, data: rows})
-                }
-            }
-            reader.readAsArrayBuffer(file);
-        }
-    }
-
     const onChange = (e) => {
         setProject((prevState) => ({
             ...prevState,
@@ -74,14 +55,11 @@ const UiProjectEdit = (props) => {
         project.id = Math.floor(Math.random() * 1000000)
         project.title = title
         project.desc = desc
+        project.creator = "user"
         project.info = rteRef.current?.editor?.getHTML()
-        project.creator = "User"
         project.created = new Date().toLocaleString()
-        project.total = project.data.length
-        project.status = ''
-
-        dispatch(projectAdd(project))
-        navigate(getRouterUrl("ccdp-v1-project-list"))
+        dispatch(modelAdd(project))
+        navigate(getRouterUrl("ccdp-v1-model-list"))
 
     }
 
@@ -89,7 +67,7 @@ const UiProjectEdit = (props) => {
         <>
             <BaseUi>
                 <Container maxWidth={'xl'}>
-                    <Typography sx={styles.title}>Edit Project</Typography>
+                    <Typography sx={styles.title}>Edit Model</Typography>
 
                     <form onSubmit={handleSubmit}>
                         <Box sx={styles.boxField}>
@@ -129,25 +107,6 @@ const UiProjectEdit = (props) => {
                                 Info
                             </InputLabel>
                             <Box sx={{ml: 1, mr: -1, mt: 1}}><TextEditor refId={rteRef}/></Box>
-
-                        </Box>
-
-                        <Box sx={styles.boxField}>
-                            <InputLabel sx={styles.formLabel}>
-                                Import *.xlsx file
-                            </InputLabel>
-
-                            <Box sx={{ml: 1}}>
-                                <input type="file" name="file" className="custom-file-input" id="inputGroupFile"
-                                       required onChange={handleImport}
-                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-
-                                {
-                                    (project.data.length > 0) && (
-                                        <InputLabel sx={{mt: 1}}>Data count : {project.data.length} rows</InputLabel>
-                                    )
-                                }
-                            </Box>
                         </Box>
 
                         <Button
@@ -164,4 +123,4 @@ const UiProjectEdit = (props) => {
         </>
     )
 }
-export default UiProjectEdit
+export default UiModelEdit

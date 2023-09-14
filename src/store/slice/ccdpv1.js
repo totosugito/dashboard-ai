@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const SLICE_KEY = "ccdp"
+const SLICE_KEY = "ccdpv1"
 export function getData() {
     return (JSON.parse(localStorage.getItem(SLICE_KEY)));
 }
@@ -26,6 +26,14 @@ const dataSlice = createSlice({
             state.idxTimerRefresh = action.payload
             setData(state)
         },
+
+        clearAllData(state, action) {
+            state.idxTimerRefresh = 0
+            state.project = []
+            state.model = []
+            setData(state)
+        },
+
         projectAdd(state, action) {
             state.project.push(action.payload)
             setData(state)
@@ -50,14 +58,44 @@ const dataSlice = createSlice({
             }
             setData(state)
         },
+
+        // ------------------ MODEL -------------------------
+        modelAdd(state, action) {
+            state.model.push(action.payload)
+            setData(state)
+        },
+        modelUpdate(state, action) {
+            for (let i = 0; i < state.model.length; i++) {
+                let selected = state.model[i]
+                if (selected["id"] === action.payload["model"]["id"]) {
+                    state.model[i]["data"] = action.payload["data"]
+                    state.model[i]["status"] = "done"
+                    break
+                }
+            }
+            setData(state)
+        },
+        modelDelete(state, action) {
+            for (let i = 0; i < state.model.length; i++) {
+                let selected = state.model[i]
+                if (selected["id"] === action.payload["id"]) {
+                    state.model.splice(i, 1);
+                }
+            }
+            setData(state)
+        },
     }
 })
 
 const {reducer, actions} = dataSlice;
 export const {
     setIdxTimerRefresh,
+    clearAllData,
     projectAdd,
     projectUpdate,
-    projectDelete
+    projectDelete,
+    modelAdd,
+    modelUpdate,
+    modelDelete
 } = actions;
 export default reducer;

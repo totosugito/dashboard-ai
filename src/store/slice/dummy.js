@@ -26,6 +26,7 @@ const dataSlice = createSlice({
             state.idxTimerRefresh = action.payload
             setData(state)
         },
+
         addNewTaskApi(state, action) {
             state.taskApi = action.payload
             setData(state)
