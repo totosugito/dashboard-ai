@@ -18,6 +18,9 @@ export function getRouterUrl(key, prefix="/", param={}) {
         "ccdp-v1-model-edit": prefix + "ccdp-v1/model-edit",
         "ccdp-v1-model-list": prefix + "ccdp-v1/model-list",
         "ccdp-v1-model-open": prefix + "ccdp-v1/model-open/" + (("id" in param) ? `${param["id"]}` : ":id"),
+
+        "ccdp-v1-job-create": prefix + "ccdp-v1/project-open/" + (("id" in param) ? `${param["id"]}` : ":id") + "/job-create",
+        "ccdp-v1-job-open": prefix + "ccdp-v1/job-open/" + (("id" in param) ? `${param["id"]}` : ":id") + "/" + (("jobId" in param) ? `${param["jobId"]}` : ":jobId"),
     }
     return(routers[key])
 }

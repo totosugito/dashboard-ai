@@ -8,6 +8,8 @@ const CcdpV1ProjectOpen = Loadable(lazy(() => import('./page/ui-project-open')))
 const CcdpV1ModelEdit = Loadable(lazy(() => import('./page/ui-model-edit')))
 const CcdpV1ModelList = Loadable(lazy(() => import('./page/ui-model-list')))
 const CcdpV1ModelOpen = Loadable(lazy(() => import('./page/ui-model-open')))
+const CcdpV1JobCreate = Loadable(lazy(() => import('./page/ui-job-create')))
+const CcdpV1JobOpen = Loadable(lazy(() => import('./page/ui-job-open')))
 export {
     CcdpV1Dashboard,
     CcdpV1ProjectEdit,
@@ -15,5 +17,7 @@ export {
     CcdpV1ProjectOpen,
     CcdpV1ModelEdit,
     CcdpV1ModelList,
-    CcdpV1ModelOpen
+    CcdpV1ModelOpen,
+    CcdpV1JobCreate,
+    CcdpV1JobOpen
 }

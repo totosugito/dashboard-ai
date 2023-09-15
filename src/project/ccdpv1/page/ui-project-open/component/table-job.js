@@ -1,4 +1,4 @@
-import {Box, Grid, IconButton, Typography, useTheme} from "@mui/material";
+import {Box, Grid, IconButton, Typography} from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
@@ -8,29 +8,20 @@ import MuiDialog from "../../../../../component/MuiDialog";
 import {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import {getRouterUrl} from "../../../../../router";
-import {projectDelete} from "../../../../../store/slice/ccdpv1";
+import {projectJobDelete} from "../../../../../store/slice/ccdpv1";
 
-const TableProjectList = (props) => {
-    const theme = useTheme()
-    const styles = {}
+const TableJob = (props) => {
+    const styles = {
+
+    }
 
     const create_table_column = () => {
-        return ([
+        return([
             {
                 accessorKey: 'title',
                 header: "Title",
                 enableSorting: true,
                 enableColumnActions: false,
-                Cell: ({cell, row}) => (
-                    <>
-                        <Typography>{cell.getValue()}</Typography>
-                        <Typography sx={{
-                            color: theme.palette.text.secondary,
-                            fontSize: '90%',
-                            fontStyle: 'italic'
-                        }}>{row.original["desc"]}</Typography>
-                    </>
-                )
             },
             {
                 accessorKey: 'creator',
@@ -53,6 +44,20 @@ const TableProjectList = (props) => {
                 )
             },
             {
+                accessorKey: 'total',
+                header: "Data Count",
+                enableSorting: true,
+                enableColumnActions: false,
+                size: 100,
+            },
+            {
+                accessorKey: 'status',
+                header: "Status",
+                enableSorting: true,
+                enableColumnActions: false,
+                size: 100,
+            },
+            {
                 accessorKey: 'action',
                 header: "Action",
                 enableSorting: false,
@@ -60,9 +65,8 @@ const TableProjectList = (props) => {
                 size: 100,
                 Cell: ({cell, row}) => (
                     <>
-                        <IconButton
-                            onClick={() => showDialogDelete(row.original)}><DeleteForeverOutlinedIcon/></IconButton>
-                        <IconButton onClick={() => openProjectPage(row.original)}><FolderOpenOutlinedIcon/></IconButton>
+                        <IconButton onClick={()=> showDialogDelete(row.original)}><DeleteForeverOutlinedIcon/></IconButton>
+                        <IconButton onClick={()=> openJobPage(row.original)}><FolderOpenOutlinedIcon/></IconButton>
                     </>
                 )
             }
@@ -75,8 +79,8 @@ const TableProjectList = (props) => {
     const dataPrev = useRef(props.data);
     const navigate = useNavigate()
 
-    const openProjectPage = (row) => {
-        navigate(getRouterUrl("ccdp-v1-project-open", "/", {id: row['id']}))
+    const openJobPage = (row) => {
+        navigate(getRouterUrl("ccdp-v1-job-open", "/", {id: props.projectId, jobId: row["id"]}))
     }
 
     const showDialogDelete = (row) => {
@@ -87,37 +91,39 @@ const TableProjectList = (props) => {
         setOpenDeleteDialog(false)
     }
     const dialogClearOnConfirmClicked = () => {
-        dispatch(projectDelete(selectedRow))
+        dispatch(projectJobDelete({projectId: props.projectId, jobId: selectedRow["id"]}))
         setOpenDeleteDialog(false)
         window.location.reload()
     }
     return (
         <>
-            <MaterialReactTable
-                columns={create_table_column()}
-                data={data}
-                enableStickyHeader
-                manualSorting={false}
-                enableTopToolbar={false}
-                enableStickyFooter={false}
-                enableFullScreenToggle={false}
-                enableDensityToggle={false}
-                enableColumnFilters={false}
-                enableBottomToolbar={data.length > 10}
-                muiTableProps={{
-                    sx: {},
-                }}
-                initialState={{}}
-            />
+                    <MaterialReactTable
+                        columns={create_table_column()}
+                        data={props.data}
+                        enableStickyHeader
+                        manualSorting={false}
+                        enableTopToolbar={false}
+                        enableStickyFooter={false}
+                        enableFullScreenToggle={false}
+                        enableDensityToggle={false}
+                        enableColumnFilters={false}
+                        enableBottomToolbar={props.data.length > 10}
+                        muiTableProps={{
+                            sx: {
+                            },
+                        }}
+                        initialState={{
+                        }}
+                    />
 
             <MuiDialog
                 open={openDeleteDialog}
-                title={<Box textAlign={'center'}><Typography variant={'h4'}>Delete Project</Typography></Box>}
+                title={<Box textAlign={'center'}><Typography variant={'h4'}>Delete Job</Typography></Box>}
                 contents={
                     <>
                         <Grid container spacing={2}>
                             <Grid item sx={{maxWidth: '300px'}}>
-                                <Typography>Are you want to delete project <b>{selectedRow['title']}</b> ?</Typography>
+                                <Typography>Are you want to delete job <b>{selectedRow['title']}</b> ?</Typography>
                             </Grid>
                         </Grid>
                     </>
@@ -130,4 +136,4 @@ const TableProjectList = (props) => {
         </>
     )
 }
-export default TableProjectList
+export default TableJob

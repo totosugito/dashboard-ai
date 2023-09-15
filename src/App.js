@@ -10,7 +10,10 @@ import {
     CcdpV1ProjectOpen,
     CcdpV1ModelEdit,
     CcdpV1ModelList,
-    CcdpV1ModelOpen
+    CcdpV1ModelOpen,
+    CcdpV1JobCreate,
+    CcdpV1JobOpen
+
 } from "./project/ccdpv1";
 import {getRouterUrl} from "./router";
 
@@ -37,6 +40,9 @@ function App() {
                 <Route path={getRouterUrl("ccdp-v1-model-edit")} element={<CcdpV1ModelEdit/>}/>
                 <Route path={getRouterUrl("ccdp-v1-model-list")} element={<CcdpV1ModelList/>}/>
                 <Route path={getRouterUrl("ccdp-v1-model-open")} element={<CcdpV1ModelOpen/>}/>
+
+                <Route path={getRouterUrl("ccdp-v1-job-create")} element={<CcdpV1JobCreate/>}/>
+                <Route path={getRouterUrl("ccdp-v1-job-open")} element={<CcdpV1JobOpen/>}/>
             </Routes>
         </ThemeProvider>
     );

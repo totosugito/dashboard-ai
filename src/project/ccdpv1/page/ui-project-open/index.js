@@ -18,16 +18,17 @@ import BaseUi from "../base-ui";
 import {useEffect} from "react";
 import TextEditorReadOnly from "../../../../component/TipTap/TextEditorReadOnly";
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
-import TableData from "./component/table-data";
 import {httpPost} from "../../../../service/http-api";
-import {getRouterApi} from "../../../../router";
+import {getRouterApi, getRouterUrl} from "../../../../router";
 import {dispatch} from "../../../../store";
 import {projectUpdate} from "../../../../store/slice/ccdpv1";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { green, pink, blue } from '@mui/material/colors';
+import {green, pink, blue} from '@mui/material/colors';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import DirectionsRunOutlinedIcon from '@mui/icons-material/DirectionsRunOutlined';
 import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
+import TableJob from "./component/table-job";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 const UiProjectOpen = () => {
     const navigate = useNavigate()
@@ -72,7 +73,7 @@ const UiProjectOpen = () => {
     const dataStore = useSelector((state) => state.ccdpv1)
     const [data, setData] = useState(dataStore["project"])
     const [model, setModel] = useState(dataStore["model"])
-    const [selectedData, setSelectedData] = useState({data: {}})
+    const [selectedData, setSelectedData] = useState({job: []})
 
     useEffect(() => {
         let selectedId = params["id"] * 1
@@ -90,7 +91,7 @@ const UiProjectOpen = () => {
             <>
                 <Paper sx={{p: 1, height: '100%'}}>
                     <Typography sx={styles.cardTitle}>Project
-                        : {selectedData["title"]} ({selectedData["id"]})</Typography>
+                        : {selectedData["title"]}</Typography>
                     <Typography sx={styles.subTitle}>Creator</Typography>
                     <Typography sx={styles.subTitleVal}>{selectedData["creator"]}</Typography>
 
@@ -100,8 +101,8 @@ const UiProjectOpen = () => {
                     <Typography sx={styles.subTitle}>Description</Typography>
                     <Typography sx={styles.subTitleVal}>{selectedData["desc"]}</Typography>
 
-                    <Typography sx={styles.subTitle}>Status</Typography>
-                    <Typography sx={styles.subTitleVal}>{selectedData["status"]}</Typography>
+                    {/*<Typography sx={styles.subTitle}>Status</Typography>*/}
+                    {/*<Typography sx={styles.subTitleVal}>{selectedData["status"]}</Typography>*/}
 
                     <Typography sx={styles.subTitle}>Info</Typography>
                     <TextEditorReadOnly text={selectedData["info"]}/>
@@ -139,11 +140,11 @@ const UiProjectOpen = () => {
     }
 
     const createActivityItem = (icon, color, title, desc) => {
-        return(
+        return (
             <ListItem disablePadding>
                 <ListItemButton>
                     <ListItemIcon>
-                        <Avatar sx={{ bgcolor: color }}>
+                        <Avatar sx={{bgcolor: color}}>
                             {icon}
                         </Avatar>
                     </ListItemIcon>
@@ -162,14 +163,27 @@ const UiProjectOpen = () => {
                 <Paper sx={styles.paperModel}>
                     <Typography sx={styles.cardTitle}>Activity</Typography>
                     <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                        {createActivityItem(<InfoOutlinedIcon />, pink[500], "Create a project", "1 minutes ago")}
-                        {createActivityItem(<EventNoteOutlinedIcon />, pink[300], "Adding note", "5 minutes ago")}
-                        {createActivityItem(<DirectionsRunOutlinedIcon />, blue[500], "Run prediction", "20 minutes ago")}
-                        {createActivityItem(<ViewInArIcon />, green[500], "Create a project", "1 hours ago")}
-                        {createActivityItem(<ViewInArIcon />, green[500], "Create a project", "2 hours ago")}
-                        {createActivityItem(<BackupTableOutlinedIcon />, blue[300], "Update data table", "3 hours ago")}
-                        {createActivityItem(<BackupTableOutlinedIcon />, blue[300], "Create data table", "3 hours ago")}
+                        {createActivityItem(<InfoOutlinedIcon/>, pink[500], "Create a project", "1 minutes ago")}
+                        {createActivityItem(<EventNoteOutlinedIcon/>, pink[300], "Adding note", "5 minutes ago")}
+                        {createActivityItem(<DirectionsRunOutlinedIcon/>, blue[500], "Run prediction", "20 minutes ago")}
+                        {createActivityItem(<ViewInArIcon/>, green[500], "Create a project", "1 hours ago")}
+                        {createActivityItem(<ViewInArIcon/>, green[500], "Create a project", "2 hours ago")}
+                        {createActivityItem(<BackupTableOutlinedIcon/>, blue[300], "Update data table", "3 hours ago")}
+                        {createActivityItem(<BackupTableOutlinedIcon/>, blue[300], "Create data table", "3 hours ago")}
                     </List>
+                </Paper>
+            </>
+        )
+    }
+
+    const createJobView = () => {
+        return (
+            <>
+                <Paper sx={styles.paperModel}>
+                    <Typography sx={styles.cardTitle}>Job List</Typography>
+                    <Button variant="outlined" startIcon={<PostAddIcon/>} sx={{textTransform: 'none', mr: 2}}
+                            onClick={() => navigate(getRouterUrl("ccdp-v1-job-create", "/", {id: params["id"]}))}>Create Job</Button>
+                    <TableJob projectId={selectedData["id"]} data={selectedData['job']}/>
                 </Paper>
             </>
         )
@@ -202,14 +216,8 @@ const UiProjectOpen = () => {
                         <Grid item xs={3}>
                             {createActivityView()}
                         </Grid>
-                        <Grid item xs={12}>
-                            <Box sx={{mt: 2}}>
-                                <Typography sx={styles.cardTitle}>Project Data</Typography>
-                                <Button variant="outlined" sx={{mt: 1}} onClick={() => http_run_prediction()}>Run
-                                    Prediction</Button>
-                                <TableData data={selectedData["data"]}/>
-                            </Box>
-                            <Box sx={{height: "30px"}}/>
+                        <Grid item xs={12} sx={{mt: 2}}>
+                            {createJobView()}
                         </Grid>
                     </Grid>
                 </Container>

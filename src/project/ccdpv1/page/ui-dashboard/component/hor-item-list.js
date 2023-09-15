@@ -29,17 +29,17 @@ const HorItemList = (props) => {
             width: '100px'
         },
         gridItem: {
-            width: "240px"
+            width: "400px"
         },
         itemButton: {
             height: '80px',
-            width: '240px',
+            width: '400px',
             textAlign: 'left',
             textTransform: 'none'
         },
         itemContainer: {
             height: '80px',
-            width: '240px'
+            width: '400px'
         },
         avatarContainer: {
             height: '80px'

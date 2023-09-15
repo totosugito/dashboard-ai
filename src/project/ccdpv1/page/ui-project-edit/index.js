@@ -39,29 +39,10 @@ const UiProjectEdit = (props) => {
         creator: '',
         info: '',
         created: '',
-        total: '',
-        status: '',
-        data: []
+        job: [],
+        task: []
     })
     const {title, desc} = project
-
-    const handleImport = ($event) => {
-        const files = $event.target.files;
-        if (files.length) {
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const wb = read(event.target.result);
-                const sheets = wb.SheetNames;
-
-                if (sheets.length) {
-                    const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                    setProject({...project, data: rows})
-                }
-            }
-            reader.readAsArrayBuffer(file);
-        }
-    }
 
     const onChange = (e) => {
         setProject((prevState) => ({
@@ -77,8 +58,8 @@ const UiProjectEdit = (props) => {
         project.info = rteRef.current?.editor?.getHTML()
         project.creator = "User"
         project.created = new Date().toLocaleString()
-        project.total = project.data.length
-        project.status = ''
+        project.job = []
+        project.task = []
 
         dispatch(projectAdd(project))
         navigate(getRouterUrl("ccdp-v1-project-list"))
@@ -130,24 +111,6 @@ const UiProjectEdit = (props) => {
                             </InputLabel>
                             <Box sx={{ml: 1, mr: -1, mt: 1}}><TextEditor refId={rteRef}/></Box>
 
-                        </Box>
-
-                        <Box sx={styles.boxField}>
-                            <InputLabel sx={styles.formLabel}>
-                                Import *.xlsx file
-                            </InputLabel>
-
-                            <Box sx={{ml: 1}}>
-                                <input type="file" name="file" className="custom-file-input" id="inputGroupFile"
-                                       required onChange={handleImport}
-                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-
-                                {
-                                    (project.data.length > 0) && (
-                                        <InputLabel sx={{mt: 1}}>Data count : {project.data.length} rows</InputLabel>
-                                    )
-                                }
-                            </Box>
                         </Box>
 
                         <Button

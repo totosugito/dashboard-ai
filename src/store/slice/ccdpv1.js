@@ -59,6 +59,52 @@ const dataSlice = createSlice({
             setData(state)
         },
 
+        projectJobAdd(state, action) {
+            for (let i = 0; i < state.project.length; i++) {
+                let selected = state.project[i]
+                if (selected["id"] === action.payload["project"]["id"]) {
+                    state.project[i]["job"] = action.payload["project"]["job"]
+                    break
+                }
+            }
+            setData(state)
+        },
+        projectJobDelete(state, action) {
+            let projectId = action.payload["projectId"]
+            let jobId = action.payload["jobId"]
+            for (let i = 0; i < state.project.length; i++) {
+                let selected = state.project[i]
+                if (selected["id"] === projectId) {
+                    for(let j=0; j<selected["job"].length; j++) {
+                        if(selected["job"][j]["id"] === jobId) {
+                            state.project[i]["job"].splice(j, 1);
+                            break
+                        }
+                    }
+                    break
+                }
+            }
+            setData(state)
+        },
+        projectJobUpdate(state, action) {
+            let projectId = action.payload["projectId"]
+            let jobId = action.payload["jobId"]
+            for (let i = 0; i < state.project.length; i++) {
+                let selected = state.project[i]
+                if (selected["id"] === projectId) {
+                    for(let j=0; j<selected["job"].length; j++) {
+                        if(selected["job"][j]["id"] === jobId) {
+                            state.project[i]["job"][j]["data"] = action.payload["data"]
+                            state.project[i]["job"][j]["status"] = "done"
+                            break
+                        }
+                    }
+                    break
+                }
+            }
+            setData(state)
+        },
+
         // ------------------ MODEL -------------------------
         modelAdd(state, action) {
             state.model.push(action.payload)
@@ -96,6 +142,9 @@ export const {
     projectDelete,
     modelAdd,
     modelUpdate,
-    modelDelete
+    modelDelete,
+    projectJobAdd,
+    projectJobDelete,
+    projectJobUpdate
 } = actions;
 export default reducer;

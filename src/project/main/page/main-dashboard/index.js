@@ -24,7 +24,7 @@ const MainDashboard = () => {
         },
         paper: {
             p: 2,
-            width: '150px',
+            width: '250px',
             textTransform: 'none'
         },
         icon: {
@@ -41,17 +41,18 @@ const MainDashboard = () => {
                     <Typography variant={'h4'}>Dummy</Typography>
                 </Paper>
             </Button>
-            <Button onClick={()=>navigate(getRouterUrl("ccdp-dashboard"))}>
-                <Paper sx={styles.paper}>
-                    <CreditCardIcon style={styles.icon}/>
-                    <Typography variant={'h4'}>CCDP</Typography>
-                </Paper>
-            </Button>
+
+            {/*<Button onClick={()=>navigate(getRouterUrl("ccdp-dashboard"))}>*/}
+            {/*    <Paper sx={styles.paper}>*/}
+            {/*        <CreditCardIcon style={styles.icon}/>*/}
+            {/*        <Typography variant={'h4'}>CCDP</Typography>*/}
+            {/*    </Paper>*/}
+            {/*</Button>*/}
 
             <Button onClick={()=>navigate(getRouterUrl("ccdp-v1-dashboard"))}>
                 <Paper sx={styles.paper}>
                     <CreditScoreIcon style={styles.icon}/>
-                    <Typography variant={'h4'}>CCDP v1</Typography>
+                    <Typography variant={'h4'}>CCDP</Typography>
                 </Paper>
             </Button>
         </Grid>

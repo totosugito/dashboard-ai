@@ -254,6 +254,8 @@ const UiTaskList = () => {
                                     <Grid item key={key_}>
                                         <Card>
                                             <CardContent>
+                                                <Typography variant={'h5'} sx={{color: 'blue'}}>{userTask[key_]["result"]["name"]}</Typography>
+
                                                 { ("result" in userTask[key_]) &&
                                                     userTask[key_]["status"] === "SUCCESS" ?
                                                         (<Typography>Result
@@ -266,6 +268,9 @@ const UiTaskList = () => {
                                                     {userTask[key_]["status"]}
                                                 </Typography>
                                                 <Typography>Task ID: {userTask[key_]["task_id"]}</Typography>
+
+                                                <Typography display={'inline'}>Message: </Typography>
+                                                <Typography display={'inline'}>{userTask[key_]["result"]["msg"]}</Typography>
                                             </CardContent>
                                         </Card>
                                     </Grid>)
