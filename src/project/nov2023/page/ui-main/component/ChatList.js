@@ -21,20 +21,11 @@ const ChatList = (props) => {
             color: theme.palette.primary.contrastText,
         },
         paper: {
-            p: 1,
-            height: "calc(100vh - 200px )",
-            maxWidth: "700px",
-            maxHeight: "2000px",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            position: "relative"
+            height: "calc(100vh - 175px )",
         },
         messagesBody: {
-            width: "calc( 100% - 20px )",
             margin: "5px",
-            overflowY: "auto",
-            overflowX: "hidden",
+            overflowX: "auto",
             height: "calc( 100% - 0px )",
         }
     }

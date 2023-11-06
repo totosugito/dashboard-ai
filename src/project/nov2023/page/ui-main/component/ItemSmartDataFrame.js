@@ -23,7 +23,7 @@ const ItemSmartDataFrame = (props) => {
         return (columns)
     }
 
-    return(
+    return (
         <>
             <MaterialReactTable
                 columns={create_table_column()}

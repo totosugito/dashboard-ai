@@ -1,5 +1,5 @@
 import BaseUi from "../base-ui";
-import {Box, Grid, Table, TableBody, TableCell, TableRow, Typography, useTheme} from "@mui/material";
+import {Box, Table, TableBody, TableCell, TableRow, Typography, useTheme} from "@mui/material";
 import {GeoJSON, MapContainer, TileLayer} from "react-leaflet";
 import L, {divIcon} from "leaflet";
 import 'leaflet/dist/leaflet.css';
@@ -8,6 +8,8 @@ import {useEffect, useRef, useState} from "react";
 import MapMarkerPurple from "../../../../assets/map-marker-purple.png"
 import * as ReactDOMServer from "react-dom/server";
 import ChatComponent from "./chat-component";
+import SplitterLayout from "../../../../component/react-split-layout/SplitterLayout";
+import "../../../../component/react-split-layout/styles.css";
 
 const UiMain = () => {
     const theme = useTheme()
@@ -42,7 +44,7 @@ const UiMain = () => {
             color: 'blue'
         },
         tableFirstCell: {
-            fontWeight:'bold'
+            fontWeight: 'bold'
         }
     }
 
@@ -164,39 +166,30 @@ const UiMain = () => {
     }
 
     return (<BaseUi title={<Typography sx={styles.title}>Dashboard</Typography>}>
-        <Grid container>
-            <Grid item xs={10.3}>
-                <MapContainer
-                    style={{
-                        position: "absolute",
-                        width: `calc(100% - ${chatWidth}px)`,
-                        height: `calc(100% - 70px)`,
-                        zIndex: -1,
-                    }}
-                    center={data["initial"]["center"]}
-                    zoom={data["initial"]["zoom"]}
-                    ref={setMap}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    {map && (
-                        <GeoJSON ref={geojsonRef} data={data["blocks"]} style={styles.polygonUnSelected}
-                                 onEachFeature={handleLayerBlock}/>
-                    )}
-                    <GeoJSON data={data["blocksLabel"]} pointToLayer={setBlocksLabel}/>
-                    <GeoJSON data={data["wells"]} pointToLayer={setWellMarker} onEachFeature={handleLayerWell}/>
-                </MapContainer>
-            </Grid>
-            <Grid item>
-                <Box style={{
-                    position: "absolute",
-                    left: `calc(100% - ${chatWidth}px)`,
-                }} sx={{p: 2}}>
-                    <ChatComponent/>
-                </Box>
-            </Grid>
-        </Grid>
+        <SplitterLayout secondaryInitialSize={600}>
+            <MapContainer
+                style={{
+                    width: "100%",
+                    height: "100%",
+                }}
+                center={data["initial"]["center"]}
+                zoom={data["initial"]["zoom"]}
+                ref={setMap}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {map && (
+                    <GeoJSON ref={geojsonRef} data={data["blocks"]} style={styles.polygonUnSelected}
+                             onEachFeature={handleLayerBlock}/>
+                )}
+                <GeoJSON data={data["blocksLabel"]} pointToLayer={setBlocksLabel}/>
+                <GeoJSON data={data["wells"]} pointToLayer={setWellMarker} onEachFeature={handleLayerWell}/>
+            </MapContainer>
+            <Box sx={{p: 1}}>
+                <ChatComponent/>
+            </Box>
+        </SplitterLayout>
     </BaseUi>)
 }
 export default UiMain

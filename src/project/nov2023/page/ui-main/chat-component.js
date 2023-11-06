@@ -53,7 +53,7 @@ const ChatComponent = () => {
     }
     return (
         <>
-            <Button variant="outlined" startIcon={<AutoDeleteIcon/>} onClick={() => clearChatHistory()}>Clear
+            <Button variant="outlined" color={'error'} startIcon={<AutoDeleteIcon/>} onClick={() => clearChatHistory()}>Clear
                 Chat</Button>
             <ChatList data={chatList}/>
 

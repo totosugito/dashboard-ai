@@ -22,6 +22,8 @@ const ChatItem = (props) => {
             color: theme.palette.text.primary
         },
         containerMessageOther: {
+            width: `calc(100% - 8px)`,
+            maxWidth: "80%",
             textAlign: "left",
             m: 1
         },
@@ -34,7 +36,6 @@ const ChatItem = (props) => {
         messageOther: {
             p: 1,
             backgroundColor: theme.palette.divider,
-            maxWidth: "720px",
             minHeight: "30px",
             font: "400 90% 'Open Sans', sans-serif",
             borderRadius: "10px",
@@ -54,7 +55,7 @@ const ChatItem = (props) => {
             color: theme.palette.primary.contrastText
         },
         containerMessageMine: {
-            display: "flex",
+            width: `calc(100% - 8px)`,
             justifyContent: "flex-end",
             textAlign: "right",
             m: 1
@@ -64,7 +65,6 @@ const ChatItem = (props) => {
             marginRight: "20px",
             position: "relative",
             backgroundColor: theme.palette.success.main,
-            maxWidth: "720px",
             textAlign: "left",
             font: "400 90% 'Open Sans', sans-serif",
             borderRadius: "10px",
@@ -88,6 +88,7 @@ const ChatItem = (props) => {
             case "plotly":
                 let data = JSON.parse(JSON.stringify(msg.response["data"]))
                 let layout = JSON.parse(JSON.stringify(msg.response["layout"]))
+                layout["width"] = 500 // force default chart width
                 return(<ItemPlotly data={[data]} layout={layout}/>)
             case "SmartDataframe":
                 return(<ItemSmartDataFrame data={msg.response} row={10}/>)
