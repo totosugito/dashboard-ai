@@ -5,6 +5,8 @@ export function getRouterUrl(key, prefix="/", param={}) {
         "404": prefix + "error-404",
         "home": prefix + "/",
         "main-dashboard": prefix + "main-dashboard",
+        "ui-input-csv": prefix + 'ui-input-csv',
+
         "dummy-task-list": prefix + "dummy/task-list",
         "ccdp-dashboard": prefix + "ccdp/dashboard",
         "ccdp-project-create": prefix + "ccdp/project-create",

@@ -1,5 +1,5 @@
 import BaseUi from "../base-ui";
-import {Box, Table, TableBody, TableCell, TableRow, Typography, useTheme} from "@mui/material";
+import {Box, Button, Table, TableBody, TableCell, TableRow, Typography, useTheme} from "@mui/material";
 import {GeoJSON, MapContainer, TileLayer} from "react-leaflet";
 import L, {divIcon} from "leaflet";
 import 'leaflet/dist/leaflet.css';
@@ -10,13 +10,14 @@ import * as ReactDOMServer from "react-dom/server";
 import ChatComponent from "./chat-component";
 import SplitterLayout from "../../../../component/react-split-layout/SplitterLayout";
 import "../../../../component/react-split-layout/styles.css";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import {useNavigate} from "react-router-dom";
+import {getRouterUrl} from "../../../../router";
 
 const UiMain = () => {
+    const navigate = useNavigate()
     const theme = useTheme()
     const styles = {
-        title: {
-            fontSize: "20px"
-        },
         grid: {
             mt: 1,
             alignItems: "center",
@@ -165,7 +166,15 @@ const UiMain = () => {
         layer.bindPopup(popupContent);
     }
 
-    return (<BaseUi title={<Typography sx={styles.title}>Dashboard</Typography>}>
+    const createToolBar = () => {
+        return(
+            <>
+                <Button variant="contained" color={'warning'} startIcon={<UploadFileIcon/>}
+                        onClick={() => navigate(getRouterUrl("ui-input-csv"))}>Upload CSV</Button>
+            </>
+        )
+    }
+    return (<BaseUi title={"Dashboard"} toolbar={createToolBar()}>
         <SplitterLayout secondaryInitialSize={600}>
             <MapContainer
                 style={{

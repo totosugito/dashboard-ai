@@ -1,6 +1,5 @@
 import {createTheme, ThemeProvider} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
-import {MainDashboard} from "./project/main";
 import {DummyTaskList} from "./project/dummy";
 import {CcdpDashboard, CcdpProjectCreate, CcdpProjectOpen} from "./project/ccdp";
 import {
@@ -15,7 +14,7 @@ import {
     CcdpV1JobOpen
 
 } from "./project/ccdpv1";
-import {UiMain} from "./project/nov2023";
+import {UiMain, UiInputCsv} from "./project/nov2023";
 import {getRouterUrl} from "./router";
 
 function App() {
@@ -26,6 +25,7 @@ function App() {
             <Routes>
                 <Route path={""} element={<UiMain/>}/>
                 <Route path={getRouterUrl("main-dashboard")} element={<UiMain/>}/>
+                <Route path={getRouterUrl("ui-input-csv")} element={<UiInputCsv/>}/>
 
 
                 <Route path={getRouterUrl("dummy-task-list")} element={<DummyTaskList/>}/>

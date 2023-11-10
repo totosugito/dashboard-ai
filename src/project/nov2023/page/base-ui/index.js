@@ -1,13 +1,21 @@
 import {
     AppBar,
     Box,
-    Container,
-    Grid,
+    Grid, Link,
     Toolbar, Typography,
 } from "@mui/material";
+import imageLogo from "../../../../assets/image-logo.png";
 
-const BaseUi = ({children, title}) => {
+const BaseUi = ({children, toolbar, title}) => {
     const styles = {
+        logo: {
+            width: "35px"
+        },
+        title: {
+            ml: 1,
+            color: 'white',
+            fontSize: '25px'
+        },
         boxContainer: {},
     }
 
@@ -17,7 +25,15 @@ const BaseUi = ({children, title}) => {
                 <AppBar position="static">
                     <Toolbar>
                             <Grid container direction="row" alignItems="flex-end" justifyContent="space-between">
-                                <Grid item>{title}</Grid>
+                                <Grid item><Link href={"/"} underline={'none'} display={'flex'}>
+                                    <Box
+                                        component="img"
+                                        sx={styles.logo}
+                                        src={imageLogo}
+                                    />
+                                    <Typography sx={styles.title}>{title}</Typography>
+                                </Link></Grid>
+                                <Grid item>{toolbar}</Grid>
                             </Grid>
                     </Toolbar>
                 </AppBar>
