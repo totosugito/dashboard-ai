@@ -13,68 +13,64 @@ import ItemSmartDataFrame from "./ItemSmartDataFrame";
 const ChatItem = (props) => {
     const theme = useTheme()
     const styles = {
-        displayNameOther: {
-            fontWeight: 'bold',
-            color: theme.palette.primary.main,
-            fontSize: '110%'
+
+        avatarOther: {
+            color: theme.palette.getContrastText(theme.palette.divider),
+            backgroundColor: theme.palette.primary.dark,
+            width: theme.spacing(4),
+            height: theme.spacing(4)
+        },
+        messageContentMine: {
+            color: theme.palette.text.primary
         },
         messageContentOther: {
             color: theme.palette.text.primary
         },
-        containerMessageOther: {
-            width: `calc(100% - 8px)`,
-            maxWidth: "80%",
-            textAlign: "left",
-            m: 1
-        },
-        avatarOther: {
-            color: theme.palette.getContrastText(theme.palette.divider),
-            backgroundColor: theme.palette.divider,
-            width: theme.spacing(4),
-            height: theme.spacing(4)
-        },
-        messageOther: {
-            p: 1,
-            backgroundColor: theme.palette.divider,
-            minHeight: "30px",
-            font: "400 90% 'Open Sans', sans-serif",
-            borderRadius: "10px",
-        },
-        messageTimeStampOther: {
-            fontSize: "70%",
-            color: theme.palette.text.secondary,
-            textAlign: 'right'
-        },
-
         displayNameMine: {
             fontWeight: 'bold',
-            color: theme.palette.primary.contrastText,
+            color: theme.palette.success.main,
             fontSize: '110%'
         },
-        messageContentMine: {
-            color: theme.palette.primary.contrastText
+        displayNameOther: {
+            fontWeight: 'bold',
+            color: theme.palette.primary.dark,
+            fontSize: '110%'
         },
         containerMessageMine: {
-            width: `calc(100% - 8px)`,
             justifyContent: "flex-end",
             textAlign: "right",
             m: 1
         },
+        containerMessageOther: {
+            textAlign: "left",
+            m: 1
+        },
         messageMine: {
             p: 1,
-            marginRight: "20px",
-            position: "relative",
-            backgroundColor: theme.palette.success.main,
+            mr: 1,
+            width: 'calc(100% - 100px)',
+            backgroundColor: theme.palette.divider,
             textAlign: "left",
+            font: "400 90% 'Open Sans', sans-serif",
+            borderRadius: "10px",
+        },
+        messageOther: {
+            p: 1,
+            width: 'calc(100% - 100px)',
+            // backgroundColor: theme.palette.divider,
             font: "400 90% 'Open Sans', sans-serif",
             borderRadius: "10px",
         },
         messageTimeStampMine: {
             fontSize: "70%",
-            color: theme.palette.success.contrastText,
+            color: theme.palette.text.secondary,
             textAlign: 'right'
         },
-
+        messageTimeStampOther: {
+            fontSize: "70%",
+            color: theme.palette.text.secondary,
+            textAlign: 'left'
+        },
         importantMessage: {
             ml: 1,
             color: theme.palette.warning.main
@@ -98,7 +94,7 @@ const ChatItem = (props) => {
     }
 
     const MessageOther = (data) => {
-        const timestamp = data['updatedAt'] ? moment( data['updatedAt'] ).format("YYYY-MM-DD  HH:mm:ss") : ""
+        const timestamp = data['timestamp'] ? moment( data['timestamp']*1000 ).format("YYYY-MM-DD  HH:mm:ss") : ""
         return (
             <>
                 <Grid container sx={styles.containerMessageOther}>
@@ -116,7 +112,7 @@ const ChatItem = (props) => {
     };
 
     const MessageMine = (data) => {
-        const timestamp = data['updatedAt'] ? moment( data['updatedAt'] ).format("YYYY-MM-DD  HH:mm:ss") : ""
+        const timestamp = data['timestamp'] ? moment( data['timestamp']*1000 ).format("YYYY-MM-DD  HH:mm:ss") : ""
         return (
             <>
                 <Grid container sx={styles.containerMessageMine}>
@@ -133,7 +129,7 @@ const ChatItem = (props) => {
     return (
         <>
             {
-                props.data["user"] === "ai" ? MessageOther(props.data) : MessageMine(props.data)
+                props.data?.isAi === 0 ? MessageMine(props.data) : MessageOther(props.data)
             }
         </>
     )

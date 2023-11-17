@@ -4,9 +4,8 @@ import {httpPost} from "../../../../service/http-api";
 import {useSelector} from "react-redux";
 import {addData, clearData} from "../../../../store/slice/chat";
 import {dispatch} from "../../../../store";
-import {Button} from "@mui/material";
+import {Box, Button, Grid} from "@mui/material";
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
-import LoadingIndicator from "./component/LoadingIndicator";
 import ChatInput from "./component/ChatInput";
 import CF from "../../../../config";
 
@@ -53,14 +52,21 @@ const ChatComponent = () => {
     }
     return (
         <>
-            <Button variant="outlined" color={'error'} startIcon={<AutoDeleteIcon/>} onClick={() => clearChatHistory()}>Clear
-                Chat</Button>
-            <ChatList data={chatList}/>
+            <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
+                <Box>
+                    <Button variant="outlined" color={'error'} sx={{mb: 1}}
+                            startIcon={<AutoDeleteIcon/>} onClick={() => clearChatHistory()}>
+                        Clear Chat
+                    </Button>
+                </Box>
+                <Box flexGrow={1} style={{height: '100%', overflowY: "auto"}}>
+                    <ChatList data={chatList} showLoader={showLoader}/>
+                </Box>
 
-            {showLoader &&
-                <LoadingIndicator/>
-            }
-            <ChatInput onSendMessage={onSendMessage}/>
+                <Box sx={{pt: 1}}>
+                    <ChatInput onSendMessage={onSendMessage}/>
+                </Box>
+            </div>
         </>
     )
 }

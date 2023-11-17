@@ -176,6 +176,7 @@ const UiMain = () => {
     }
     return (<BaseUi title={"Dashboard"} toolbar={createToolBar()}>
         <SplitterLayout secondaryInitialSize={600}>
+            {/*<div></div>*/}
             <MapContainer
                 style={{
                     width: "100%",
@@ -186,7 +187,7 @@ const UiMain = () => {
                 ref={setMap}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
                 />
                 {map && (
                     <GeoJSON ref={geojsonRef} data={data["blocks"]} style={styles.polygonUnSelected}
@@ -195,7 +196,7 @@ const UiMain = () => {
                 <GeoJSON data={data["blocksLabel"]} pointToLayer={setBlocksLabel}/>
                 <GeoJSON data={data["wells"]} pointToLayer={setWellMarker} onEachFeature={handleLayerWell}/>
             </MapContainer>
-            <Box sx={{p: 1}}>
+            <Box sx={{p: 1}} style={{height: 'calc(100% - 18px)'}}>
                 <ChatComponent/>
             </Box>
         </SplitterLayout>
