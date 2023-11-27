@@ -4,4 +4,6 @@ import {lazy} from "react";
 
 const UiMain = Loadable(lazy(() => import('./page/ui-main')))
 const UiInputCsv = Loadable(lazy(() => import('./page/ui-input-csv')))
-export {UiMain, UiInputCsv}
+const UiSyncfusionKanban = Loadable(lazy(() => import('./page/ui-syncfusion-kanban')))
+const UiTrelloKanban = Loadable(lazy(() => import('./page/ui-trello-kanban')))
+export {UiMain, UiInputCsv, UiSyncfusionKanban, UiTrelloKanban}

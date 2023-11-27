@@ -6,6 +6,8 @@ export function getRouterUrl(key, prefix="/", param={}) {
         "home": prefix + "/",
         "main-dashboard": prefix + "main-dashboard",
         "ui-input-csv": prefix + 'ui-input-csv',
+        "ui-syncfusion-kanban": prefix + 'ui-syncfusion-kanban',
+        "ui-trello-kanban": prefix + 'ui-trello-kanban',
 
         "dummy-task-list": prefix + "dummy/task-list",
         "ccdp-dashboard": prefix + "ccdp/dashboard",
