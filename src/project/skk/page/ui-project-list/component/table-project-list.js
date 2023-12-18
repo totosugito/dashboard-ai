@@ -1,17 +1,16 @@
-import {Box, Grid, IconButton, Typography} from "@mui/material";
+import {Box, Divider, Grid, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {
     MaterialReactTable,
     useMaterialReactTable,
 } from 'material-react-table';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
-import {useMemo, useState} from "react";
+import {useState} from "react";
 import {dispatch} from "../../../../../store";
 import MuiDialog from "../../../../../component/MuiDialog";
-import {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import {getRouterUrl} from "../../../../../router";
-import {dummyDeleteProject} from "../../../../../store/slice/dummy";
+import {skkProjectDelete} from "../../../../../store/slice/skk";
+import UserAvatar from "../../../component/toolbar/user-avatar";
+import AdsClickIcon from '@mui/icons-material/AdsClick';
 
 const TableProjectList = (props) => {
     const create_table_column = () => {
@@ -28,13 +27,17 @@ const TableProjectList = (props) => {
                 enableSorting: true,
                 enableColumnActions: false,
                 size: 100,
+                Cell: ({cell}) => (
+                    <>
+                        <UserAvatar user={cell.getValue()}/>
+                    </>
+                )
             },
             {
                 accessorKey: 'created',
                 header: "Created",
                 enableSorting: true,
                 enableColumnActions: false,
-                size: 100,
                 Cell: ({cell}) => (
                     <>
                         <div>{cell.getValue() !== undefined ? cell.getValue().split(", ")[0] : ""}</div>
@@ -43,30 +46,17 @@ const TableProjectList = (props) => {
                 )
             },
             {
-                accessorKey: 'total',
-                header: "Data Count",
-                enableSorting: true,
-                enableColumnActions: false,
-                size: 100,
-            },
-            {
-                accessorKey: 'status',
-                header: "Status",
-                enableSorting: true,
-                enableColumnActions: false,
-                size: 100,
-            },
-            {
                 accessorKey: 'action',
                 header: "Action",
                 enableSorting: false,
                 enableColumnActions: false,
-                size: 100,
-                Cell: ({cell, row}) => (
+                Cell: ({row}) => (
                     <>
                         <IconButton
-                            onClick={() => showDialogDelete(row.original)}><DeleteForeverOutlinedIcon/></IconButton>
-                        <IconButton onClick={() => openProjectPage(row.original)}><FolderOpenOutlinedIcon/></IconButton>
+                            onClick={(e) => handleClick(e, row.original)}><AdsClickIcon/></IconButton>
+                        {/*<IconButton*/}
+                        {/*    onClick={() => showDialogDelete(row.original)}><DeleteForeverOutlinedIcon/></IconButton>*/}
+                        {/*<IconButton onClick={() => openProjectPage(row.original)}><FolderOpenOutlinedIcon/></IconButton>*/}
                     </>
                 )
             }
@@ -74,27 +64,40 @@ const TableProjectList = (props) => {
     }
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
-    const [selectedRow, setSelectedRow] = useState({original: {title: ''}})
     const [data, setData] = useState(props.data)
-    const dataPrev = useRef(props.data);
+    const [row, setRow] = useState({})
     const navigate = useNavigate()
 
-    const openProjectPage = (row) => {
-        navigate(getRouterUrl("ccdp-project-open", "/", {id: row['id']}))
+    const openProjectPage = () => {
+        handleClose();
+        navigate(getRouterUrl("skk-project-open", "/", {id: row['id']}))
     }
-
-    const showDialogDelete = (row) => {
-        setSelectedRow(row)
+    const editProjectPage = () => {
+        handleClose();
+        navigate(getRouterUrl("skk-project-edit", "/", {id: row['id']}))
+    }
+    const showDialogDelete = () => {
         setOpenDeleteDialog(true)
+        handleClose();
     }
     const dialogClearOnCancelClicked = () => {
         setOpenDeleteDialog(false)
     }
     const dialogClearOnConfirmClicked = () => {
-        dispatch(dummyDeleteProject(selectedRow))
+        dispatch(skkProjectDelete(row))
         setOpenDeleteDialog(false)
         window.location.reload()
     }
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event, rr) => {
+        setRow(rr)
+        setAnchorEl(event.currentTarget)
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
@@ -102,6 +105,8 @@ const TableProjectList = (props) => {
                 table={useMaterialReactTable({
                     columns: create_table_column(),
                     data,
+                    enableRowNumbers: true,
+                    rowNumberDisplayMode: 'original',
                     enableStickyHeader: true,
                     manualSorting: false,
                     enableTopToolbar: false,
@@ -115,12 +120,12 @@ const TableProjectList = (props) => {
 
             <MuiDialog
                 open={openDeleteDialog}
-                title={<Box textAlign={'center'}><Typography variant={'h4'}>Clear Task</Typography></Box>}
+                title={<Box textAlign={'center'}><Typography variant={'h4'}>Delete project</Typography></Box>}
                 contents={
                     <>
                         <Grid container spacing={2}>
                             <Grid item sx={{maxWidth: '300px'}}>
-                                <Typography>Are you want to delete project <b>{selectedRow['title']}</b> ?</Typography>
+                                <Typography>Are you want to delete project <b>{row['title']}</b> ?</Typography>
                             </Grid>
                         </Grid>
                     </>
@@ -130,6 +135,26 @@ const TableProjectList = (props) => {
                 onCancelClicked={dialogClearOnCancelClicked}
                 onConfirmClicked={dialogClearOnConfirmClicked}
             />
+
+            <div>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    PaperProps={{
+                        style: {
+                            width: 150,
+                        },
+                    }}
+                >
+                    <MenuItem onClick={openProjectPage}>Open</MenuItem>
+                    <MenuItem onClick={editProjectPage}>Edit</MenuItem>
+                    <MenuItem onClick={showDialogDelete}>Delete</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleClose}>Gantt</MenuItem>
+                    <MenuItem onClick={handleClose}>Trello</MenuItem>
+                </Menu>
+            </div>
         </>
     )
 }

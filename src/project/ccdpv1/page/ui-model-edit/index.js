@@ -6,7 +6,7 @@ import TextEditor from "../../../../component/TipTap/TextEditor";
 import {dispatch} from "../../../../store";
 import {getRouterUrl} from "../../../../router";
 import {useState} from "react";
-import {modelAdd, projectAdd} from "../../../../store/slice/ccdpv1";
+import {modelAdd} from "../../../../store/slice/ccdpv1";
 
 const UiModelEdit = (props) => {
     const navigate = useNavigate()

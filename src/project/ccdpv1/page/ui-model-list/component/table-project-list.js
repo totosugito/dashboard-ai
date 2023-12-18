@@ -93,22 +93,22 @@ const TableProjectList = (props) => {
     }
     return (
         <>
-            <MaterialReactTable
-                columns={create_table_column()}
-                data={data}
-                enableStickyHeader
-                manualSorting={false}
-                enableTopToolbar={false}
-                enableStickyFooter={false}
-                enableFullScreenToggle={false}
-                enableDensityToggle={false}
-                enableColumnFilters={false}
-                enableBottomToolbar={data.length > 10}
-                muiTableProps={{
-                    sx: {},
-                }}
-                initialState={{}}
-            />
+            {/*<MaterialReactTable*/}
+            {/*    columns={create_table_column()}*/}
+            {/*    data={data}*/}
+            {/*    enableStickyHeader*/}
+            {/*    manualSorting={false}*/}
+            {/*    enableTopToolbar={false}*/}
+            {/*    enableStickyFooter={false}*/}
+            {/*    enableFullScreenToggle={false}*/}
+            {/*    enableDensityToggle={false}*/}
+            {/*    enableColumnFilters={false}*/}
+            {/*    enableBottomToolbar={data.length > 10}*/}
+            {/*    muiTableProps={{*/}
+            {/*        sx: {},*/}
+            {/*    }}*/}
+            {/*    initialState={{}}*/}
+            {/*/>*/}
 
             <MuiDialog
                 open={openDeleteDialog}

@@ -14,7 +14,8 @@ import {
     CcdpV1JobOpen
 
 } from "./project/ccdpv1";
-import {UiMain, UiInputCsv, UiSyncfusionKanban, UiTrelloKanban} from "./project/nov2023";
+import {UiMain, UiInputCsv, UiTrelloKanban} from "./project/nov2023";
+import {SkkProjectList, SkkProjectCreate, SkkProjectOpen, SkkProjectEdit} from "./project/skk";
 import {getRouterUrl} from "./router";
 
 function App() {
@@ -23,10 +24,13 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Routes>
-                <Route path={""} element={<UiMain/>}/>
-                <Route path={getRouterUrl("main-dashboard")} element={<UiMain/>}/>
+                <Route path={""} element={<SkkProjectList/>}/>
+                <Route path={getRouterUrl("skk-project-list")} element={<SkkProjectList/>}/>
+                <Route path={getRouterUrl("skk-project-create")} element={<SkkProjectCreate/>}/>
+                <Route path={getRouterUrl("skk-project-open")} element={<SkkProjectOpen/>}/>
+                <Route path={getRouterUrl("skk-project-edit")} element={<SkkProjectEdit/>}/>
+
                 <Route path={getRouterUrl("ui-input-csv")} element={<UiInputCsv/>}/>
-                <Route path={getRouterUrl("ui-syncfusion-kanban")} element={<UiSyncfusionKanban/>}/>
                 <Route path={getRouterUrl("ui-trello-kanban")} element={<UiTrelloKanban/>}/>
 
 

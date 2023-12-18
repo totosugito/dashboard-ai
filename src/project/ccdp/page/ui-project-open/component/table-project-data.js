@@ -1,6 +1,8 @@
 import {Container} from "@mui/material";
-import MaterialReactTable from "material-react-table";
-
+import {
+    MaterialReactTable,
+    useMaterialReactTable,
+} from 'material-react-table';
 
 const TableProjectData = (props) => {
     const styles = {
@@ -23,29 +25,31 @@ const TableProjectData = (props) => {
         return (columns)
     }
 
-    return(
+    return (
         <>
             <Container maxWidth="xl" sx={styles.container}>
                 <MaterialReactTable
-                    columns={create_table_column()}
-                    data={props.data}
-                    enableStickyHeader
-                    manualSorting={false}
-                    enableTopToolbar={false}
-                    enableStickyFooter={false}
-                    enableFullScreenToggle={false}
-                    enableDensityToggle={false}
-                    enableColumnFilters={false}
-                    enableBottomToolbar={props.data.length > 15}
-                    muiTableProps={{
-                        sx: {
-                            tableLayout: 'fixed',
+                    table={useMaterialReactTable({
+                        columns: create_table_column(),
+                        data: props.data,
+                        enableStickyHeader: true,
+                        manualSorting: false,
+                        enableTopToolbar: false,
+                        enableStickyFooter: false,
+                        enableFullScreenToggle: false,
+                        enableDensityToggle: false,
+                        enableColumnFilters: false,
+                        enableBottomToolbar: props.data.length > 15,
+                        muiTableProps: {
+                            sx: {
+                                tableLayout: 'fixed',
+                            },
                         },
-                    }}
-                    initialState={{
-                        pagination: {pageSize: 15, pageIndex: 0},
-                        density: 'compact',
-                    }}
+                        initialState: {
+                            pagination: {pageSize: 15, pageIndex: 0},
+                            density: 'compact',
+                        }
+                    })}
                 />
             </Container>
         </>

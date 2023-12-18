@@ -26,27 +26,27 @@ const TableProjectData = (props) => {
     return(
         <>
             <Container maxWidth="xl" sx={styles.container}>
-                <MaterialReactTable
-                    columns={create_table_column()}
-                    data={props.data}
-                    enableStickyHeader
-                    manualSorting={false}
-                    enableTopToolbar={false}
-                    enableStickyFooter={false}
-                    enableFullScreenToggle={false}
-                    enableDensityToggle={false}
-                    enableColumnFilters={false}
-                    enableBottomToolbar={props.data.length > 15}
-                    muiTableProps={{
-                        sx: {
-                            tableLayout: 'fixed',
-                        },
-                    }}
-                    initialState={{
-                        pagination: {pageSize: 15, pageIndex: 0},
-                        density: 'compact',
-                    }}
-                />
+                {/*<MaterialReactTable*/}
+                {/*    columns={create_table_column()}*/}
+                {/*    data={props.data}*/}
+                {/*    enableStickyHeader*/}
+                {/*    manualSorting={false}*/}
+                {/*    enableTopToolbar={false}*/}
+                {/*    enableStickyFooter={false}*/}
+                {/*    enableFullScreenToggle={false}*/}
+                {/*    enableDensityToggle={false}*/}
+                {/*    enableColumnFilters={false}*/}
+                {/*    enableBottomToolbar={props.data.length > 15}*/}
+                {/*    muiTableProps={{*/}
+                {/*        sx: {*/}
+                {/*            tableLayout: 'fixed',*/}
+                {/*        },*/}
+                {/*    }}*/}
+                {/*    initialState={{*/}
+                {/*        pagination: {pageSize: 15, pageIndex: 0},*/}
+                {/*        density: 'compact',*/}
+                {/*    }}*/}
+                {/*/>*/}
             </Container>
         </>
     )

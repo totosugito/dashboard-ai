@@ -97,24 +97,24 @@ const TableJob = (props) => {
     }
     return (
         <>
-                    <MaterialReactTable
-                        columns={create_table_column()}
-                        data={props.data}
-                        enableStickyHeader
-                        manualSorting={false}
-                        enableTopToolbar={false}
-                        enableStickyFooter={false}
-                        enableFullScreenToggle={false}
-                        enableDensityToggle={false}
-                        enableColumnFilters={false}
-                        enableBottomToolbar={props.data.length > 10}
-                        muiTableProps={{
-                            sx: {
-                            },
-                        }}
-                        initialState={{
-                        }}
-                    />
+                    {/*<MaterialReactTable*/}
+                    {/*    columns={create_table_column()}*/}
+                    {/*    data={props.data}*/}
+                    {/*    enableStickyHeader*/}
+                    {/*    manualSorting={false}*/}
+                    {/*    enableTopToolbar={false}*/}
+                    {/*    enableStickyFooter={false}*/}
+                    {/*    enableFullScreenToggle={false}*/}
+                    {/*    enableDensityToggle={false}*/}
+                    {/*    enableColumnFilters={false}*/}
+                    {/*    enableBottomToolbar={props.data.length > 10}*/}
+                    {/*    muiTableProps={{*/}
+                    {/*        sx: {*/}
+                    {/*        },*/}
+                    {/*    }}*/}
+                    {/*    initialState={{*/}
+                    {/*    }}*/}
+                    {/*/>*/}
 
             <MuiDialog
                 open={openDeleteDialog}

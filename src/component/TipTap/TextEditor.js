@@ -10,6 +10,7 @@ const TextEditor = (props) => {
         <>
             <RichTextEditor
                 ref={props.refId}
+                content={props.content}
                 extensions={editorExtension()}
                 renderControls={() => <EditorControl/>}>
                 {() => (
