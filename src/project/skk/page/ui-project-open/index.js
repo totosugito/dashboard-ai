@@ -1,7 +1,7 @@
 import BaseUi from "../base-ui";
 import {Breadcrumbs, Container, Typography, useTheme} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
+import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import TextEditorReadOnly from "../../../../component/TipTap/TextEditorReadOnly";
@@ -42,6 +42,7 @@ const UiProjectOpen = (props) => {
                 <Container maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
+                        <BrLabel label={"Open"}/>
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 

@@ -1,7 +1,7 @@
 import BaseUi from "../base-ui";
 import {Breadcrumbs, Container, TextField, useTheme} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
-import {BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
+import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import FormProjectEdit from "../ui-project-create/component/form_project_edit";
@@ -51,6 +51,7 @@ const UiProjectEdit = (props) => {
                 <Container maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
+                        <BrLabel label={"Edit"}/>
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 

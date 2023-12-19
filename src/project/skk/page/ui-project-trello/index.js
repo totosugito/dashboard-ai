@@ -1,10 +1,10 @@
 import BaseUi from "../base-ui";
-import {Breadcrumbs, Container, Typography, useTheme} from "@mui/material";
+import {Breadcrumbs, Button, Container, useTheme} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
+import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import TextEditorReadOnly from "../../../../component/TipTap/TextEditorReadOnly";
+// import Board from "react-trello-ts";
 
 const UiProjectTrello = (props) => {
     const theme = useTheme()
@@ -17,12 +17,16 @@ const UiProjectTrello = (props) => {
             fontWeight: 'bold',
             color: theme.palette.secondary.main
         },
+        board: {
+            backgroundColor: theme.palette.background.default
+        }
     }
 
     const params = useParams();
     const dataStore = useSelector((state) => state.skk)
     const [project, setProject] = useState(dataStore["project"])
     const [selectedProject, setSelectedProject] = useState({})
+    const [trello, setTrello] = useState({lanes: []})
 
 
     useEffect(() => {
@@ -30,35 +34,33 @@ const UiProjectTrello = (props) => {
         for (let i = 0; i < project.length; i++) {
             if (project[i]["id"] === selectedId) {
                 setSelectedProject(project[i])
+                let trello_ = project[i]["trello"]
+                if (!trello_.hasOwnProperty("lanes")) {
+                    trello_ = {lanes: []}
+                }
+                setTrello(trello_)
                 break
             }
         }
         // eslint-disable-next-line
     }, []);
 
+    const onSaveClicked = () => {
+        console.log(JSON.stringify(trello))
+    }
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
                 <Container maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
+                        <BrLabel label={"Trello"}/>
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 
-                    <Typography sx={styles.label}>Title</Typography>
-                    <Typography>{selectedProject.title}</Typography>
-
-                    <Typography sx={styles.label}>Description</Typography>
-                    <Typography>{selectedProject.desc}</Typography>
-
-                    <Typography sx={styles.label}>Creator</Typography>
-                    <Typography>{selectedProject.creator?.name}</Typography>
-
-                    <Typography sx={styles.label}>Created</Typography>
-                    <Typography>{selectedProject.created}</Typography>
-
-                    <Typography sx={styles.label}>Info</Typography>
-                    <TextEditorReadOnly text={selectedProject["info"]}/>
+                    <Button onClick={()=>onSaveClicked()} >Save</Button>
+                    {/*<Board data={trello} canAddLanes={true} draggable={true} editable={true} style={styles.board} cardDraggable={true} isDraggingOver={true}/>*/}
+                    {/*<Board data={trello} canAddLanes={true} editable={true}/>*/}
                 </Container>
             </BaseUi>
         </>
