@@ -1,16 +1,12 @@
 import BaseUi from "../base-ui";
-import {Breadcrumbs, Container, TextField, useTheme} from "@mui/material";
-import {useNavigate, useParams} from "react-router-dom";
+import {Breadcrumbs, Container, Typography, useTheme} from "@mui/material";
+import {useParams} from "react-router-dom";
 import {BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import FormProjectEdit from "../ui-project-create/component/form_project_edit";
-import {dispatch} from "../../../../store";
-import {skkProjectUpdate} from "../../../../store/slice/skk";
-import {getRouterUrl} from "../../../../router";
+import TextEditorReadOnly from "../../../../component/TipTap/TextEditorReadOnly";
 
-const UiProjectEdit = (props) => {
-    const navigate = useNavigate()
+const UiProjectTrello = (props) => {
     const theme = useTheme()
     const styles = {
         container: {
@@ -28,6 +24,7 @@ const UiProjectEdit = (props) => {
     const [project, setProject] = useState(dataStore["project"])
     const [selectedProject, setSelectedProject] = useState({})
 
+
     useEffect(() => {
         let selectedId = params["id"] * 1
         for (let i = 0; i < project.length; i++) {
@@ -39,12 +36,6 @@ const UiProjectEdit = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    const handleSubmit = (project) => {
-        project.updated = new Date().toLocaleString()
-        dispatch(skkProjectUpdate(project))
-        navigate(getRouterUrl("skk-project-list"))
-    }
-
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
@@ -54,12 +45,23 @@ const UiProjectEdit = (props) => {
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 
-                    {Object.keys(selectedProject).length > 0 &&
-                        <FormProjectEdit data={selectedProject} onSubmit={handleSubmit} submitText={"Update Project"}/>
-                    }
+                    <Typography sx={styles.label}>Title</Typography>
+                    <Typography>{selectedProject.title}</Typography>
+
+                    <Typography sx={styles.label}>Description</Typography>
+                    <Typography>{selectedProject.desc}</Typography>
+
+                    <Typography sx={styles.label}>Creator</Typography>
+                    <Typography>{selectedProject.creator?.name}</Typography>
+
+                    <Typography sx={styles.label}>Created</Typography>
+                    <Typography>{selectedProject.created}</Typography>
+
+                    <Typography sx={styles.label}>Info</Typography>
+                    <TextEditorReadOnly text={selectedProject["info"]}/>
                 </Container>
             </BaseUi>
         </>
     )
 }
-export default UiProjectEdit
+export default UiProjectTrello

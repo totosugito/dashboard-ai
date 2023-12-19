@@ -32,6 +32,7 @@ const UiProjectCreate = (props) => {
     const handleSubmit = (project) => {
         project.id = Math.floor(Math.random() * 1000000)
         project.created = new Date().toLocaleString()
+        project.updated = new Date().toLocaleString()
         project.creator = {"name": dataStore["user"]["name"], "avatar": dataStore["user"]["avatar"]}
 
         dispatch(skkProjectAdd(project))

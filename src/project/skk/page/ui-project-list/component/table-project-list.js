@@ -76,6 +76,10 @@ const TableProjectList = (props) => {
         handleClose();
         navigate(getRouterUrl("skk-project-edit", "/", {id: row['id']}))
     }
+    const trelloProjectPage = () => {
+        handleClose();
+        navigate(getRouterUrl("skk-project-trello", "/", {id: row['id']}))
+    }
     const showDialogDelete = () => {
         setOpenDeleteDialog(true)
         handleClose();
@@ -152,7 +156,7 @@ const TableProjectList = (props) => {
                     <MenuItem onClick={showDialogDelete}>Delete</MenuItem>
                     <Divider />
                     <MenuItem onClick={handleClose}>Gantt</MenuItem>
-                    <MenuItem onClick={handleClose}>Trello</MenuItem>
+                    <MenuItem onClick={trelloProjectPage}>Trello</MenuItem>
                 </Menu>
             </div>
         </>

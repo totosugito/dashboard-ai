@@ -32,6 +32,12 @@ const dataSlice = createSlice({
         },
 
         skkProjectUpdate(state, action) {
+            for (let i = 0; i < state.project.length; i++) {
+                let selected = state.project[i]
+                if (selected["id"] === action.payload["id"]) {
+                    state.project[i] = action.payload
+                }
+            }
             setData(state)
         },
         skkProjectDelete(state, action) {

@@ -61,6 +61,7 @@ const UiJobCreate = (props) => {
         job.id = Math.floor(Math.random() * 1000000)
         job.creator = creator
         job.created = new Date().toLocaleString()
+        job.updated = new Date().toLocaleString()
         job.total = job.data.length
         job.status = ''
 

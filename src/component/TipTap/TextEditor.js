@@ -12,7 +12,8 @@ const TextEditor = (props) => {
                 ref={props.refId}
                 content={props.content}
                 extensions={editorExtension()}
-                renderControls={() => <EditorControl/>}>
+                renderControls={() => <EditorControl/>}
+            >
                 {() => (
                     <>
                         <LinkBubbleMenu/>

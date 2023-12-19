@@ -8,6 +8,9 @@ export function getRouterUrl(key, prefix="/", param={}) {
         "skk-project-create": prefix + "skk/project-create",
         "skk-project-open": prefix + "skk/project-open/" + (("id" in param) ? `${param["id"]}` : ":id"),
         "skk-project-edit": prefix + "skk/project-edit/" + (("id" in param) ? `${param["id"]}` : ":id"),
+        "skk-project-trello": prefix + "skk/project-trello/" + (("id" in param) ? `${param["id"]}` : ":id"),
+        "skk-project-gantt": prefix + "skk/project-gantt/" + (("id" in param) ? `${param["id"]}` : ":id"),
+
         "ui-input-csv": prefix + 'ui-input-csv',
         "ui-syncfusion-kanban": prefix + 'ui-syncfusion-kanban',
         "ui-trello-kanban": prefix + 'ui-trello-kanban',

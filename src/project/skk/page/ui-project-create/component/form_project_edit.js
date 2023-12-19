@@ -2,7 +2,6 @@ import {Box, Button, InputLabel, TextField, useTheme} from "@mui/material";
 import TextEditor from "../../../../../component/TipTap/TextEditor";
 import {useRef} from "react";
 import {useState} from "react";
-import {useEffect} from "react";
 
 const FormProjectEdit = ({onSubmit, data, submitText}) => {
     const theme = useTheme()
@@ -20,12 +19,8 @@ const FormProjectEdit = ({onSubmit, data, submitText}) => {
     }
 
     const rteRef = useRef(null);
-    const [project, setProject] = useState(data)
+    const [project, setProject] = useState(JSON.parse(JSON.stringify(data)))
     const {title, desc, info} = project
-
-    useEffect(() => {
-        setProject(data)
-    }, [data])
 
     const onChange = (e) => {
         setProject((prevState) => ({
@@ -36,14 +31,14 @@ const FormProjectEdit = ({onSubmit, data, submitText}) => {
 
     const onProjectUpdate = () => {
         project.info = rteRef.current?.editor?.getHTML()
-        onSubmit(project)
+        onSubmit(project);
     }
     return (
         <>
             <form onSubmit={onProjectUpdate}>
                 <Box sx={styles.boxField}>
                     <InputLabel sx={styles.formLabel}>
-                        Title* - {project.title} - {data.title}
+                        Title*
                     </InputLabel>
                     <TextField
                         sx={{p: 1}}
@@ -74,7 +69,7 @@ const FormProjectEdit = ({onSubmit, data, submitText}) => {
                     <InputLabel sx={styles.formLabel}>
                         Info
                     </InputLabel>
-                    <Box sx={{ml: 1, mr: -1, mt: 1}}><TextEditor refId={rteRef} content={info}/></Box>
+                    <Box sx={{ml: 1, mr: -1, mt: 1}}><TextEditor refId={rteRef} content={info || ''}/></Box>
                 </Box>
                 <Button
                     sx={{m: 1}}
