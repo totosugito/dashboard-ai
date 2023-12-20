@@ -39,9 +39,9 @@ const UiProjectEdit = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    const handleSubmit = (project) => {
-        project.updated = new Date().toLocaleString()
-        dispatch(skkProjectUpdate(project))
+    const handleSubmit = (v) => {
+        v.updated = new Date().toLocaleString()
+        dispatch(skkProjectUpdate(v))
         navigate(getRouterUrl("skk-project-list"))
     }
 

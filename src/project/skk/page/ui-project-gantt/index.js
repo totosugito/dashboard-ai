@@ -1,9 +1,10 @@
 import BaseUi from "../base-ui";
-import {Breadcrumbs, Button, Container, useTheme} from "@mui/material";
+import {Alert, Box, Breadcrumbs, Button, Container, IconButton, Snackbar, Stack, useTheme} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
+import CloseIcon from '@mui/icons-material/Close';
 import {
     Edit,
     Filter,
@@ -13,8 +14,6 @@ import {
     Resize,
     Sort,
     Toolbar,
-    ExcelExport,
-    ColumnDirective, ColumnsDirective
 } from "@syncfusion/ej2-react-gantt";
 
 import '../../../../../node_modules/@syncfusion/ej2-base/styles/material.css';
@@ -31,8 +30,11 @@ import '../../../../../node_modules/@syncfusion/ej2-grids/styles/material.css';
 import '../../../../../node_modules/@syncfusion/ej2-treegrid/styles/material.css';
 import '../../../../../node_modules/@syncfusion/ej2-react-gantt/styles/material.css';
 
-import { registerLicense } from '@syncfusion/ej2-base';
+import {registerLicense} from '@syncfusion/ej2-base';
 import {useRef} from "react";
+import {dispatch} from "../../../../store";
+import {skkProjectUpdate} from "../../../../store/slice/skk";
+
 registerLicense("Ngo9BigBOggjHTQxAR8/V1NHaF1cWGhIfEx1RHxQdld5ZFRHallYTnNWUj0eQnxTdEZiWH1ZcHdQRWJZWE12Xg==");
 const UiProjectGantt = (props) => {
     const theme = useTheme()
@@ -47,6 +49,9 @@ const UiProjectGantt = (props) => {
         },
         board: {
             backgroundColor: theme.palette.background.default
+        },
+        gantt: {
+            height: "calc(100vh - 120px)"
         }
     }
 
@@ -54,82 +59,35 @@ const UiProjectGantt = (props) => {
     const dataStore = useSelector((state) => state.skk)
     const [project, setProject] = useState(dataStore["project"])
     const [selectedProject, setSelectedProject] = useState({})
-    const [trello, setTrello] = useState({lanes: []})
-
+    const [gantt, setGantt] = useState([])
+    const [openSaveSnackbar, setOpenSaveSnackbar] = useState(false);
 
     useEffect(() => {
         let selectedId = params["id"] * 1
         for (let i = 0; i < project.length; i++) {
             if (project[i]["id"] === selectedId) {
-                setSelectedProject(project[i])
-                let trello_ = project[i]["trello"]
-                if (!trello_.hasOwnProperty("lanes")) {
-                    trello_ = {lanes: []}
-                }
-                setTrello(trello_)
+                let tmp_ = JSON.parse(JSON.stringify(project[i]))
+                setSelectedProject(tmp_)
+                setGantt(tmp_["gantt"])
+                console.log(JSON.stringify(tmp_["gantt"]))
                 break
             }
         }
         // eslint-disable-next-line
     }, []);
 
-    let data = [
-        {
-            TaskID: 1,
-            TaskName: 'Project Initiation',
-            StartDate: new Date('04/02/2019'),
-            EndDate: new Date('04/21/2019'),
-            subtasks: [
-                {
-                    TaskID: 2,
-                    TaskName: 'Identify Site location',
-                    StartDate: new Date('04/02/2019'),
-                    Duration: 4,
-                    Progress: 50
-                },
-            ]
-        },
-        ];
-    let taskSettings = {
-        id: 'TaskID',
-        name: 'TaskName',
-        startDate: 'StartDate',
-        endDate: 'EndDate',
-        duration: 'Duration',
-        progress: 'Progress',
-        child: 'subtasks'
-    };
-    let toolbar = ['Add', 'Edit', 'Update', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll', 'Indent', 'Outdent'];
-    let editSettings = {
-        allowAdding: true,
-        allowEditing: true,
-        allowDeleting: true,
-        allowTaskbarEditing: true,
-        showDeleteConfirmDialog: true
-    };
-
-    const [ganttChartData, setGanttChartData] = useState([]);
     const ganttRef = useRef(null);
-
-    const handleSave = (args) => {
-        setGanttChartData(args.modifiedRecords);
-        console.log('Data saved mod:', args.modifiedRecords);
-        console.log('Data saved data:', JSON.stringify(args.data));
-    };
-
-    const handleSaveButtonClick = () => {
-        let ll = ganttRef.current.currentViewData
-        let result = []
-        for (let i=0; i<ll.length; i++) {
-            result.push(ll[i]["taskData"])
+    const toolbarClick = (args) => {
+        if (args.item.id === 'save_data') {
+            let v = JSON.parse(JSON.stringify(selectedProject))
+            v.updated = new Date().toLocaleString()
+            v.gantt = JSON.parse(JSON.stringify(ganttRef.current["props"]["dataSource"]))
+            // setSelectedProject((prevState) => ({...prevState, updated: new Date().toLocaleString(), gantt: result}))
+            dispatch(skkProjectUpdate(v))
+            setOpenSaveSnackbar(true);
         }
-        console.log(JSON.stringify(result))
-        // console.log(JSON.stringify(ganttRef.current.currentViewData))
-        // const ganttInstance = ganttRef.current;
-        //
-        // // Manually trigger the save operation
-        // ganttInstance.save();
     };
+
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
@@ -140,14 +98,46 @@ const UiProjectGantt = (props) => {
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 
-                    <Button onClick={handleSaveButtonClick}>Save</Button>
-                    <GanttComponent ref={ganttRef} dataSource={data} treeColumnIndex={1} taskFields={taskSettings}
-                                    allowResizing={true} allowSelection={true} toolbar={toolbar} editSettings={editSettings} allowExcelExport={true}
-                                    actionBegin={handleSave}>
-                        <Inject services={[Edit, Selection, Toolbar, Filter, Sort, Resize, ExcelExport]}/>
-                        {/*<Inject services={[ColumnDirective, ColumnsDirective]} />*/}
-                    </GanttComponent>
+                    {gantt.length > 0 &&
+                        <GanttComponent style={styles.gantt} ref={ganttRef} dataSource={gantt} treeColumnIndex={1}
+                                        allowResizing={true} allowSelection={true}
+                                        toolbarClick={toolbarClick.bind(this)}
+                                        toolbar={[{
+                                            text: 'Save',
+                                            tooltipText: 'Save data',
+                                            id: 'save_data',
+                                            prefixIcon: 'e-save'
+                                        },
+                                            'Add', 'Edit', 'Update', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll', 'Indent', 'Outdent']}
+                                        taskFields={{
+                                            id: 'TaskID',
+                                            name: 'TaskName',
+                                            startDate: 'StartDate',
+                                            endDate: 'EndDate',
+                                            duration: 'Duration',
+                                            progress: 'Progress',
+                                            dependency: 'Predecessor',
+                                            child: 'subtasks'
+                                        }}
+                                        editSettings={{
+                                            allowAdding: true,
+                                            allowEditing: true,
+                                            allowDeleting: true,
+                                            allowTaskbarEditing: true,
+                                            showDeleteConfirmDialog: true
+                                        }}>
+                            <Inject services={[Edit, Selection, Toolbar, Filter, Sort, Resize]}/>
+                        </GanttComponent>
+                    }
                 </Container>
+
+                <Snackbar
+                    open={openSaveSnackbar}
+                    autoHideDuration={1000}
+                    onClose={()=>setOpenSaveSnackbar(false)}
+                >
+                    <Alert severity="success">Data saved to local storage successfully</Alert>
+                </Snackbar>
             </BaseUi>
         </>
     )
