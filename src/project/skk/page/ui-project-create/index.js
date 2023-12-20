@@ -25,7 +25,15 @@ const UiProjectCreate = (props) => {
         creator: {},
         created: '',
         gantt: [],
-        kanban: {}
+        kanban: [{
+            Id: "Task 1",
+            Status: "Open",
+            Priority: "Normal",
+            Assignee: "Andrew Fuller",
+            Estimate: 0,
+            Tags: "",
+            Summary: "Sample card",
+        }]
     }
     const dataStore = useSelector((state) => state.skk)
 
