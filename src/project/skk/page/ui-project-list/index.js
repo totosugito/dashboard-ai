@@ -58,19 +58,22 @@ const UiProjectList = () => {
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
                 <Container maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
-                        <BrProjectList/>
+                        <BrProjectList hasClick={false}/>
                     </Breadcrumbs>
 
                     <Grid container direction="row" alignItems="flex-end" justifyContent="space-between">
                         <Grid item>
-                            <Button variant="outlined" startIcon={<PostAddIcon/>} sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
-                                    onClick={()=>navigate(getRouterUrl("skk-project-create"))}>Create project</Button>
+                            <Button variant="outlined" startIcon={<PostAddIcon/>}
+                                    sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
+                                    onClick={() => navigate(getRouterUrl("skk-project-create"))}>Create project</Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" color={'success'} startIcon={<CreateNewFolderOutlinedIcon/>} sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
+                            <Button variant="outlined" color={'success'} startIcon={<CreateNewFolderOutlinedIcon/>}
+                                    sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
                                     onClick={createDummyProject}>Dummy project</Button>
-                            <Button variant="outlined" color={'error'} startIcon={<DeleteForeverOutlinedIcon/>} sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
-                                    onClick={()=> setOpenClearDialog(true)}>Clear project</Button>
+                            <Button variant="outlined" color={'error'} startIcon={<DeleteForeverOutlinedIcon/>}
+                                    sx={{textTransform: 'none', mb: 1, mr: 2}} size={'small'}
+                                    onClick={() => setOpenClearDialog(true)}>Clear project</Button>
                         </Grid>
                     </Grid>
                     <TableProjectList data={project}/>

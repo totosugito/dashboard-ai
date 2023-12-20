@@ -25,7 +25,7 @@ const UiProjectCreate = (props) => {
         creator: {},
         created: '',
         gantt: [],
-        trello: {}
+        kanban: {}
     }
     const dataStore = useSelector((state) => state.skk)
 

@@ -76,9 +76,9 @@ const TableProjectList = (props) => {
         handleClose();
         navigate(getRouterUrl("skk-project-edit", "/", {id: row['id']}))
     }
-    const trelloProjectPage = () => {
+    const kanbanProjectPage = () => {
         handleClose();
-        navigate(getRouterUrl("skk-project-trello", "/", {id: row['id']}))
+        navigate(getRouterUrl("skk-project-kanban", "/", {id: row['id']}))
     }
     const ganttProjectPage = () => {
         handleClose();
@@ -161,7 +161,7 @@ const TableProjectList = (props) => {
                     <MenuItem onClick={showDialogDelete}>Delete</MenuItem>
                     <Divider />
                     <MenuItem onClick={ganttProjectPage}>Gantt</MenuItem>
-                    <MenuItem onClick={trelloProjectPage}>Trello</MenuItem>
+                    <MenuItem onClick={kanbanProjectPage}>Kanban</MenuItem>
                 </Menu>
             </div>
         </>

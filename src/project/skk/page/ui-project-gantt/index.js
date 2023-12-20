@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import CloseIcon from '@mui/icons-material/Close';
 import {
     Edit,
     Filter,
@@ -59,7 +58,7 @@ const UiProjectGantt = (props) => {
     const dataStore = useSelector((state) => state.skk)
     const [project, setProject] = useState(dataStore["project"])
     const [selectedProject, setSelectedProject] = useState({})
-    const [gantt, setGantt] = useState([])
+    const [gantt, setGantt] = useState(undefined)
     const [openSaveSnackbar, setOpenSaveSnackbar] = useState(false);
 
     useEffect(() => {
@@ -69,7 +68,6 @@ const UiProjectGantt = (props) => {
                 let tmp_ = JSON.parse(JSON.stringify(project[i]))
                 setSelectedProject(tmp_)
                 setGantt(tmp_["gantt"])
-                console.log(JSON.stringify(tmp_["gantt"]))
                 break
             }
         }
@@ -98,7 +96,7 @@ const UiProjectGantt = (props) => {
                         <BrProjectOpen label={selectedProject["title"]} hasClick={false}/>
                     </Breadcrumbs>
 
-                    {gantt.length > 0 &&
+                    {gantt !== undefined &&
                         <GanttComponent style={styles.gantt} ref={ganttRef} dataSource={gantt} treeColumnIndex={1}
                                         allowResizing={true} allowSelection={true}
                                         toolbarClick={toolbarClick.bind(this)}

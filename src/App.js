@@ -15,7 +15,7 @@ import {
 
 } from "./project/ccdpv1";
 import {UiInputCsv} from "./project/nov2023";
-import {SkkProjectList, SkkProjectCreate, SkkProjectOpen, SkkProjectEdit, UiProjectTrello, UiProjectGantt} from "./project/skk";
+import {SkkProjectList, SkkProjectCreate, SkkProjectOpen, SkkProjectEdit, UiProjectKanban, UiProjectGantt} from "./project/skk";
 import {getRouterUrl} from "./router";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
                 <Route path={getRouterUrl("skk-project-create")} element={<SkkProjectCreate/>}/>
                 <Route path={getRouterUrl("skk-project-open")} element={<SkkProjectOpen/>}/>
                 <Route path={getRouterUrl("skk-project-edit")} element={<SkkProjectEdit/>}/>
-                <Route path={getRouterUrl("skk-project-trello")} element={<UiProjectTrello/>}/>
+                <Route path={getRouterUrl("skk-project-kanban")} element={<UiProjectKanban/>}/>
                 <Route path={getRouterUrl("skk-project-gantt")} element={<UiProjectGantt/>}/>
 
                 <Route path={getRouterUrl("ui-input-csv")} element={<UiInputCsv/>}/>
