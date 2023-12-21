@@ -4,11 +4,8 @@ import {
     Box,
     Breadcrumbs,
     Button,
-    Container,
     Grid,
     Snackbar,
-    Stack,
-    TextField,
     Typography,
     useTheme
 } from "@mui/material";
@@ -39,7 +36,8 @@ const UiProjectKanban = (props) => {
     const theme = useTheme()
     const styles = {
         container: {
-            mt: 2
+            p: 1,
+            mt: 1,
         },
         label: {
             mt: 2,
@@ -126,7 +124,7 @@ const UiProjectKanban = (props) => {
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
-                <Container maxWidth="xl" sx={styles.container}>
+                <Box maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
                         <BrLabel label={"Kanban"}/>
@@ -174,7 +172,7 @@ const UiProjectKanban = (props) => {
                             </ColumnsDirective>
                         </KanbanComponent>
                     }
-                </Container>
+                </Box>
 
                 <MuiDialog
                     open={openClearDialog}

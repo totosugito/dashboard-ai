@@ -1,5 +1,5 @@
 import BaseUi from "../base-ui";
-import {Breadcrumbs, Container, Typography, useTheme} from "@mui/material";
+import {Box, Breadcrumbs, Typography, useTheme} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
@@ -10,7 +10,8 @@ const UiProjectOpen = (props) => {
     const theme = useTheme()
     const styles = {
         container: {
-            mt: 2
+            p: 1,
+            mt: 1,
         },
         label: {
             mt: 2,
@@ -39,7 +40,7 @@ const UiProjectOpen = (props) => {
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
-                <Container maxWidth="xl" sx={styles.container}>
+                <Box maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
                         <BrLabel label={"Open"}/>
@@ -60,7 +61,7 @@ const UiProjectOpen = (props) => {
 
                     <Typography sx={styles.label}>Info</Typography>
                     <TextEditorReadOnly text={selectedProject["info"]}/>
-                </Container>
+                </Box>
             </BaseUi>
         </>
     )

@@ -1,4 +1,4 @@
-import {Avatar, Box, Breadcrumbs, Button, Container, Grid, Typography, useTheme} from "@mui/material";
+import {Box, Breadcrumbs, Button, Grid, Typography, useTheme} from "@mui/material";
 import BaseUi from "../base-ui";
 import TableProjectList from "./component/table-project-list";
 import {useSelector} from "react-redux";
@@ -25,7 +25,8 @@ const UiProjectList = () => {
             color: theme.palette.secondary.main
         },
         container: {
-            mt: 2,
+            p: 1,
+            mt: 1,
         },
         card: {
             p: 0,
@@ -56,7 +57,7 @@ const UiProjectList = () => {
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
-                <Container maxWidth="xl" sx={styles.container}>
+                <Box maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList hasClick={false}/>
                     </Breadcrumbs>
@@ -95,7 +96,7 @@ const UiProjectList = () => {
                         onCancelClicked={dialogClearOnCancelClicked}
                         onConfirmClicked={dialogClearOnConfirmClicked}
                     />
-                </Container>
+                </Box>
             </BaseUi>
         </>
     )

@@ -1,5 +1,5 @@
 import BaseUi from "../base-ui";
-import {Breadcrumbs, Container, TextField, useTheme} from "@mui/material";
+import {Box, Breadcrumbs, useTheme} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import {BrLabel, BrProjectList, BrProjectOpen, SkkToolbar} from "../../component";
 import {useSelector} from "react-redux";
@@ -14,7 +14,8 @@ const UiProjectEdit = (props) => {
     const theme = useTheme()
     const styles = {
         container: {
-            mt: 2
+            p: 1,
+            mt: 1,
         },
         label: {
             mt: 2,
@@ -48,7 +49,7 @@ const UiProjectEdit = (props) => {
     return (
         <>
             <BaseUi toolbar={<SkkToolbar user={dataStore["user"]}/>}>
-                <Container maxWidth="xl" sx={styles.container}>
+                <Box maxWidth="xl" sx={styles.container}>
                     <Breadcrumbs sx={{mb: 1}}>
                         <BrProjectList/>
                         <BrLabel label={"Edit"}/>
@@ -58,7 +59,7 @@ const UiProjectEdit = (props) => {
                     {Object.keys(selectedProject).length > 0 &&
                         <FormProjectEdit data={selectedProject} onSubmit={handleSubmit} submitText={"Update Project"}/>
                     }
-                </Container>
+                </Box>
             </BaseUi>
         </>
     )

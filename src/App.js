@@ -15,7 +15,15 @@ import {
 
 } from "./project/ccdpv1";
 import {UiInputCsv} from "./project/nov2023";
-import {SkkProjectList, SkkProjectCreate, SkkProjectOpen, SkkProjectEdit, UiProjectKanban, UiProjectGantt} from "./project/skk";
+import {
+    SkkHome,
+    SkkProjectList,
+    SkkProjectCreate,
+    SkkProjectOpen,
+    SkkProjectEdit,
+    UiProjectKanban,
+    UiProjectGantt
+} from "./project/skk";
 import {getRouterUrl} from "./router";
 
 function App() {
@@ -24,7 +32,8 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Routes>
-                <Route path={""} element={<SkkProjectList/>}/>
+                <Route path={"/"} element={<SkkHome/>}/>
+                <Route path={getRouterUrl("skk-home")} element={<SkkHome/>}/>
                 <Route path={getRouterUrl("skk-project-list")} element={<SkkProjectList/>}/>
                 <Route path={getRouterUrl("skk-project-create")} element={<SkkProjectCreate/>}/>
                 <Route path={getRouterUrl("skk-project-open")} element={<SkkProjectOpen/>}/>
