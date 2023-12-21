@@ -38,6 +38,7 @@ const TableProjectList = (props) => {
                 header: "Created",
                 enableSorting: true,
                 enableColumnActions: false,
+                size: 100,
                 Cell: ({cell}) => (
                     <>
                         <div>{cell.getValue() !== undefined ? cell.getValue().split(", ")[0] : ""}</div>
@@ -50,6 +51,7 @@ const TableProjectList = (props) => {
                 header: "Action",
                 enableSorting: false,
                 enableColumnActions: false,
+                size: 80,
                 Cell: ({row}) => (
                     <>
                         <IconButton

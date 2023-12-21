@@ -47,10 +47,10 @@ const UiHome = () => {
                             <AnalyticCard title="Total Page Views" count="442" percentage={59.3} extra="35,000" />
                         </Grid>
                         <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <AnalyticCard title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+                            <AnalyticCard title="Total Users" count="250" percentage={70.5} extra="100" />
                         </Grid>
                         <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <AnalyticCard title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+                            <AnalyticCard title="Total Visitor" count="8,800" percentage={27.4} isLoss color="warning" extra="1,943" />
                         </Grid>
 
                         <Grid item xs={12} md={6} lg={6}>
@@ -88,7 +88,7 @@ const UiHome = () => {
                         <Grid item xs={12} md={6} lg={6}>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item>
-                                    <Typography variant="h5">Monthly Data</Typography>
+                                    <Typography variant="h5">Weekly Data</Typography>
                                 </Grid>
                             </Grid>
                             <Card sx={{ mt: 1.5 }}>
