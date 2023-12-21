@@ -65,7 +65,8 @@ const UiProjectKanban = (props) => {
         // update the store
         let v = JSON.parse(JSON.stringify(selectedProject))
         v.updated = new Date().toLocaleString()
-        let tmp_ = [{
+        let tmp_ = [
+            {
             Id: "Task 1",
             Status: "Open",
             Priority: "Normal",
@@ -73,7 +74,10 @@ const UiProjectKanban = (props) => {
             Estimate: 0,
             Tags: "",
             Summary: "Sample card",
-        }]
+        }
+        ]
+        // tmp_.splice(0, 1);
+
         v.kanban = tmp_
         dispatch(skkProjectUpdate(v))
 
@@ -116,7 +120,7 @@ const UiProjectKanban = (props) => {
     const onClickSaved = () => {
         let v = JSON.parse(JSON.stringify(selectedProject))
         v.updated = new Date().toLocaleString()
-        v.kanban = kanbanRef.current["props"]["dataSource"]
+        v.kanban = JSON.parse(JSON.stringify(kanbanRef.current["props"]["dataSource"]))
         dispatch(skkProjectUpdate(v))
         setOpenSaveSnackbar(true);
     }

@@ -9,3 +9,4 @@
 ![Screenshot](./src/assets/demo/screenshot1.png)
 
 scp -r -P 23 build/* waviv@117.54.250.85:/var/www/html/backend.knowai.app
+scp -r -P 24 build/* reska@117.54.250.82:/var/www/html/survei
