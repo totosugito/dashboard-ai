@@ -4,6 +4,7 @@ export function getRouterUrl(key, prefix="/", param={}) {
     let routers = {
         "404": prefix + "error-404",
         "skk-home": prefix + "skk/home",
+        "skk-home-map": prefix + "skk/home-map",
         "skk-project-list": prefix + "skk/project-list",
         "skk-project-create": prefix + "skk/project-create",
         "skk-project-open": prefix + "skk/project-open/" + (("id" in param) ? `${param["id"]}` : ":id"),

@@ -19,6 +19,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+import PinDropIcon from '@mui/icons-material/PinDrop';
 
 export default function DrawerWeb(props) {
     const theme = useTheme()
@@ -59,6 +60,14 @@ export default function DrawerWeb(props) {
                         <ListItemButton sx={styles.iconMenu}>
                             <HomeIcon/>
                             <ListItemText sx={styles.menuText} primary={"Home"}/>
+                        </ListItemButton>
+                    </ListItem>
+                </Link>
+                <Link underline={'none'} href={getRouterUrl("skk-home-map")}>
+                    <ListItem disablePadding>
+                        <ListItemButton sx={styles.iconMenu}>
+                            <PinDropIcon/>
+                            <ListItemText sx={styles.menuText} primary={"Map"}/>
                         </ListItemButton>
                     </ListItem>
                 </Link>

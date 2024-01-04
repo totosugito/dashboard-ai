@@ -17,6 +17,7 @@ import {
 import {UiInputCsv} from "./project/nov2023";
 import {
     SkkHome,
+    SkkHomeMap,
     SkkProjectList,
     SkkProjectCreate,
     SkkProjectOpen,
@@ -34,6 +35,7 @@ function App() {
             <Routes>
                 <Route path={"/"} element={<SkkHome/>}/>
                 <Route path={getRouterUrl("skk-home")} element={<SkkHome/>}/>
+                <Route path={getRouterUrl("skk-home-map")} element={<SkkHomeMap/>}/>
                 <Route path={getRouterUrl("skk-project-list")} element={<SkkProjectList/>}/>
                 <Route path={getRouterUrl("skk-project-create")} element={<SkkProjectCreate/>}/>
                 <Route path={getRouterUrl("skk-project-open")} element={<SkkProjectOpen/>}/>
